@@ -5,3 +5,10 @@ Template.welcome.helpers({
     return Meteor.user().username;
   }
 });
+
+
+Template.welcome.helpers({
+  goals: function () {
+    return Goals.find({}, {limit:100, sort:{'numberOfVotes':-1, 'numberOfComments':-1}});
+  }
+});

@@ -1,0 +1,97 @@
+<template name="newGoal">
+  {{#ionModal focusFirstInput=true title="发布新目标"}}
+    {{> quickForm collection="Goals" id="goal-new-form" type="insert" omitFields="userId,voterIds,numberOfVotes,numberOfComments,createdAt" buttonContent="发布"}}
+  {{/ionModal}}
+</template>
+
+<template name="_goalItem">
+  {{#with goal}}
+    {{#ionItem path=../path iconLeft=true iconRight=true avatar=true}}
+      <img src='/maodou-logo.png' width='60px'/>
+      <small>
+        <!-- {{tagline}} -->
+        {{#with author}}
+            {{profile.name}} 
+            (<a href="/users/{{_id}}">@{{username}}</a>) 愿意出 {{../price}} 元
+        {{/with}}
+      </small>
+      <p>{{desc}}</p>
+      <span class="comments-count">
+        {{numberOfComments}}
+      </span>
+    {{/ionItem}}
+  {{/with}}
+</template>
+
+<template name="goalsShow">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton class="button" text=false}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title">目标详情</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+
+      <div class="product-detail">
+        
+        {{#with goal}}
+
+          {{#ionItem iconLeft=true iconRight=true class="item-text-wrap" avatar=true}}
+            <img src='/maodou-logo.png' width='60px'/>
+            <h2 class="product-title">
+              <!-- <a href="{{url}}" target="_blank" class="positive">{{name}}</a> -->
+              {{desc}}
+            </h2>
+            {{#with author}}
+              <p>
+                <small>发布者：<a href="{{pathFor 'users.show'}}" class="dark">{{username}}</a></small>
+              </p>
+            {{/with}}   
+            <span class="date-posted">
+              {{datePosted}}
+            </span>
+          {{/ionItem}}
+
+          <!--
+          <div class="padding product-detail-upvotes">
+            <h5>支持：<small>{{numberOfVotes}}</small></h5>
+            {{#each voters}}
+              <a href="{{pathFor 'users.show'}}">
+                {{> avatar user=this size="small" shape="circle"}}
+              </a>
+            {{/each}}
+          </div>
+          -->
+
+          <div class="padding text-left">
+            <h5>关键字: </h5>
+              <li>{{tagline}}</li>
+            <h5>可以承受学费：</h5>
+              <li>{{price}}</li>
+            <h5>愿意一起学: </h5>
+              <small>{{numberOfVotes}}</small>
+            {{#each voters}}
+              <a href="{{pathFor 'users.show'}}" class="item-avatar" style='position:relative'>
+                  <img src="{{profile.avatar_url}}" height="40" width="40">
+              </a>
+            {{/each}}
+          </div>
+          <br>
+        {{/with}}
+
+        <div class="padding product-detail-comments">
+          <h5>评论: <small>{{numberOfComments}}</small></h5>
+          <button class="button button-positive button-small button-circle button-new-comment" data-action="new-comment">
+            {{>ionIcon icon="plus"}}
+          </button>
+        </div>
+
+      </div>
+
+    {{/ionContent}}
+  {{/ionView}}
+
+</template>

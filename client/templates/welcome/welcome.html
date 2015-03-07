@@ -14,13 +14,28 @@
     <h1 class="title">毛豆网移动版</h1>
   {{/contentFor}}
 
+  {{#if currentUser}}
+    {{#contentFor "headerButtonRight"}}
+      <button class="button button-clear pull-right" data-ion-modal="newGoal">
+        {{> ionIcon icon='ios-plus-empty'}}
+      </button>
+    {{/contentFor}}
+  {{/if}}
+
   {{#ionView}}
     {{#ionContent}}
       <div class="padding">
       {{#if currentUser}}
         <div class="padding">
           <h2>欢迎你，{{username}} </h2>
-          <p>协作学习 编程创新</p>
+          <p><strong>毛豆网最新发布学习目标</strong></p>
+
+          {{#ionList}}
+            {{#each goals}}
+              {{> _goalItem goal=this path="goals.show"}}
+            {{/each}}
+          {{/ionList}}
+
         </div>
       {{else}}
         {{> atForm}}

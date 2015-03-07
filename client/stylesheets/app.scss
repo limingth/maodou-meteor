@@ -4,3 +4,13 @@ $positive: #009900;
 // Ionic
 @import '.meteor/local/build/programs/server/assets/packages/meteoric_ionic-sass/ionic';
 @import '.meteor/local/build/programs/server/assets/packages/meteoric_ionicons-sass/ionicons';
+
+.date-posted {
+  font-size: 12px;
+  width: 96px;
+  text-align: right;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: #999999;
+}

@@ -33,3 +33,33 @@
   {{/ionView}}
 
 </template>
+
+<template name="usersShow">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton class="button" text=false}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title">Profile of @{{user.username}}</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+
+        {{#with user}}
+          <h2>{{username}} 的资料</h2>
+            {{#each emails}}
+              <p>Email: {{address}}</p>
+            {{/each}}
+
+          {{#ionList}}
+           
+            {{#each votedProducts}}
+              {{> _productItem product=this path="products.show"}}
+            {{/each}}
+          {{/ionList}}
+        {{/with}}
+
+    {{/ionContent}}
+  {{/ionView}}
+</template>

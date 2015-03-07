@@ -11,6 +11,9 @@
           </div>
           <div class="content has-header">
             <div class="list">
+              <div class="item item-icon-right" data-ion-menu-welcome>
+                我的首页 {{> ionIcon icon="ios-arrow-right"}}
+              </div>
 
               <div class="item item-icon-right" data-ion-menu-profile>
                 我的资料 {{> ionIcon icon="ios-arrow-right"}}
@@ -29,21 +32,26 @@
           </div>
         {{/ionSideMenu}}
 
+
         {{#ionSideMenu side="right"}}
           <div class="bar bar-header bar-dark">
             <h1 class="title">创建</h1>
           </div>
           <div class="content has-header">
             <div class="list">
-              <div class="item item-icon-left" data-ion-menu-goal>
-                {{> ionIcon icon="ios-flag"}} 学习目标
-              </div>
+             
+              <div class="item item-icon-left" data-ion-modal="newGoal">
+                {{> ionIcon icon='ios-flag'}} 学习目标
+              </div>               
+<!--              
               <div class="item item-icon-left" data-ion-menu-team>
                 {{> ionIcon icon="ios-people"}} 学习小组
-              </div>              
+              </div>
+-->
             </div>
           </div>
         {{/ionSideMenu}}
+
 
       {{/ionSideMenus}}
 

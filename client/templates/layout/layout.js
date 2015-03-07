@@ -1,13 +1,20 @@
 Template.ionBody.events({
+/*
   'click [data-ion-modal]': function (event, template) {
     var templateName = $(event.currentTarget).data('ion-modal');
     IonModal.open(templateName, $(event.currentTarget).data());
   },
+*/
   'click [data-ion-menu-close]': function (event, template) {
     if (!IonSideMenu.snapper) {
       return;
     }
     console.log ("menu-close clicked!");
+    IonSideMenu.snapper.close();
+  },
+  'click [data-ion-menu-welcome]': function (event, template) {
+    console.log ("menu-welcome clicked!");
+    Router.go('/welcome');
     IonSideMenu.snapper.close();
   },
   'click [data-ion-menu-profile]': function (event, template) {
@@ -20,4 +27,5 @@ Template.ionBody.events({
     Router.go('/settings');
     IonSideMenu.snapper.close();
   },
+
 });

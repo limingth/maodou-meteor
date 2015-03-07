@@ -13,13 +13,26 @@ Meteor.startup(function () {
 
 Router.route('/', function () {
   this.render('welcome', {
-    data: function () { return; }
+    data: function () { 
+      return {
+        goals: Goals.find()
+      }
+    }
   });
+});
+
+Router.route('/goals/:_id', {
+  name: 'goals.show'
+});
+
+Router.route('/users/:_id', {
+  name: 'users.show'
 });
 
 Router.map(function() {
   this.route('profile');
   this.route('welcome');
   this.route('settings');
+  this.route('newGoal');
 });
 
