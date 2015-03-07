@@ -1,6 +1,6 @@
 <template name="newGoal">
   {{#ionModal focusFirstInput=true title="发布新目标"}}
-    {{> quickForm collection="Goals" id="goal-new-form" type="insert" omitFields="userId,voterIds,numberOfVotes,numberOfComments,createdAt" buttonContent="发布"}}
+    {{> quickForm collection="Goals" id="goal-new-form" type="insert" omitFields="userId,voterIds,numberOfVotes,numberOfComments,createdAt,members" buttonContent="发布"}}
   {{/ionModal}}
 </template>
 
@@ -19,6 +19,11 @@
       <span class="comments-count">
         {{numberOfComments}}
       </span>
+      <small>（{{numberOfMembers}} 人）</small>
+    {{/ionItem}}
+    {{#ionItem}}
+      <button data-action="join" class="button button-positive pull-right" >{{> ionIcon icon="ios-people"}} 加入一起学</button>
+      <button data-action='help' class="button button-positive pull-right" >{{> ionIcon icon="ios-heart"}} 我能够帮他</button>
     {{/ionItem}}
   {{/with}}
 </template>
@@ -72,7 +77,15 @@
             <h5>可以承受学费：</h5>
               <li>{{price}}</li>
             <h5>愿意一起学: </h5>
-              <small>{{numberOfVotes}}</small>
+              <small>（{{numberOfMembers}} 人）</small>
+
+                {{#each members}}
+                  <a href="{{id}}" class="item-avatar" style='position:relative'>
+                    <!-- <img src="{{picture}}" height="40" width="40"> -->
+                    {{picture}}
+                  </a>
+                {{/each}}
+
             {{#each voters}}
               <a href="{{pathFor 'users.show'}}" class="item-avatar" style='position:relative'>
                   <img src="{{profile.avatar_url}}" height="40" width="40">

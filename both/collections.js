@@ -19,6 +19,7 @@ Goals.helpers({
 */
 });
 
+/*
 Goals.attachSchema(new SimpleSchema({
   desc: {
     type: String,
@@ -59,5 +60,9 @@ Goals.attachSchema(new SimpleSchema({
   },
   createdAt: {
     type: Date
+  },
+  members: {
+    type: [{}]
   }
 }));
+*/ 
