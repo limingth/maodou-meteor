@@ -1,4 +1,4 @@
-<template name="welcome">
+<template name="settings">
 
   {{#contentFor "headerButtonLeft"}}
     <button class="button button-clear pull-left" data-ion-menu-toggle="left">
@@ -11,22 +11,18 @@
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
-    <h1 class="title">毛豆网移动版</h1>
+    <h1 class="title">账号设置</h1>
   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
-      <div class="padding">
       {{#if currentUser}}
         <div class="padding">
-          <h2>欢迎你，{{username}} </h2>
-          <p>协作学习 编程创新</p>
+          <button class="button button-positive button-block" data-action="logout">退出当前账号</button>
         </div>
       {{else}}
         {{> atForm}}
-      {{/if}}      
-      </div>
+      {{/if}}
     {{/ionContent}}
   {{/ionView}}
-
 </template>

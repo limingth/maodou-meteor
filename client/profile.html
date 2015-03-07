@@ -1,4 +1,4 @@
-<template name="welcome">
+<template name="profile">
 
   {{#contentFor "headerButtonLeft"}}
     <button class="button button-clear pull-left" data-ion-menu-toggle="left">
@@ -19,13 +19,16 @@
       <div class="padding">
       {{#if currentUser}}
         <div class="padding">
-          <h2>欢迎你，{{username}} </h2>
-          <p>协作学习 编程创新</p>
+          {{#with user}}
+            <h2>{{username}} 的资料</h2>
+            {{#each emails}}
+              <p>Email: {{address}}</p>
+            {{/each}}
+          {{/with}}
         </div>
       {{else}}
         {{> atForm}}
-      {{/if}}      
-      </div>
+      {{/if}}      </div>
     {{/ionContent}}
   {{/ionView}}
 

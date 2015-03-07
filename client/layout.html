@@ -1,0 +1,63 @@
+<template name="layout">
+  {{#ionBody}}
+
+    {{#ionSideMenuContainer}}
+
+      {{#ionSideMenus}}
+
+        {{#ionSideMenu}}
+          <div class="bar bar-header bar-dark">
+            <h1 class="title">会员资料</h1>
+          </div>
+          <div class="content has-header">
+            <div class="list">
+
+              <div class="item item-icon-right" data-ion-menu-profile>
+                我的资料 {{> ionIcon icon="ios-arrow-right"}}
+              </div>
+<!--
+              <div class="item item-icon-right" data-ion-menu-close>
+                关闭 {{> ionIcon icon="ios-arrow-right"}}
+              </div>
+-->
+            {{#if currentUser}}
+              <div class="item item-icon-right" data-ion-menu-settings>
+                账号设置 {{> ionIcon icon="ios-arrow-right"}}
+              </div>
+            {{/if}}
+            </div>
+          </div>
+        {{/ionSideMenu}}
+
+        {{#ionSideMenu side="right"}}
+          <div class="bar bar-header bar-dark">
+            <h1 class="title">创建</h1>
+          </div>
+          <div class="content has-header">
+            <div class="list">
+              <div class="item item-icon-left" data-ion-menu-goal>
+                {{> ionIcon icon="ios-flag"}} 学习目标
+              </div>
+              <div class="item item-icon-left" data-ion-menu-team>
+                {{> ionIcon icon="ios-people"}} 学习小组
+              </div>              
+            </div>
+          </div>
+        {{/ionSideMenu}}
+
+      {{/ionSideMenus}}
+
+      {{#ionSideMenuContent}}
+
+        {{> ionNavBar class="bar-positive"}}
+
+        {{#ionNavView}}
+          {{> yield}}
+        {{/ionNavView}}
+
+      {{/ionSideMenuContent}}
+
+    {{/ionSideMenuContainer}}
+
+  {{/ionBody}}
+</template>
