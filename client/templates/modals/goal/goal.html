@@ -1,6 +1,6 @@
 <template name="newGoal">
   {{#ionModal focusFirstInput=true title="发布新目标"}}
-    {{> quickForm collection="Goals" id="goal-new-form" type="insert" omitFields="userId,voterIds,numberOfVotes,numberOfComments,createdAt,members" buttonContent="发布"}}
+    {{> quickForm collection="Goals" id="goal-new-form" type="insert" omitFields="userId,voterIds,numberOfVotes,numberOfComments,createdAt,teamMembers" buttonContent="发布"}}
   {{/ionModal}}
 </template>
 
@@ -12,18 +12,28 @@
         <!-- {{tagline}} -->
         {{#with author}}
             {{profile.name}} 
-            (<a href="/users/{{_id}}">@{{username}}</a>) 愿意出 {{../price}} 元
+            <a href="/users/{{_id}}">@{{username}}</a> 发起了
         {{/with}}
       </small>
-      <p>{{desc}}</p>
+      <h2>{{desc}}</h2>
       <span class="comments-count">
         {{numberOfComments}}
       </span>
-      <small>（{{numberOfMembers}} 人）</small>
+      <small>目前已有 {{numberOfMembers}} 人在一起学习</small>
     {{/ionItem}}
-    {{#ionItem}}
-      <button data-action="join" class="button button-positive pull-right" >{{> ionIcon icon="ios-people"}} 加入一起学</button>
-      <button data-action='help' class="button button-positive pull-right" >{{> ionIcon icon="ios-heart"}} 我能够帮他</button>
+    {{#ionItem buttonRight=true avatar=true}}
+      {{#if isTeamMember}}
+      <button data-action="join" class="button button-positive pull-right" >{{> ionIcon icon="ios-people"}} <small>已在该小组</small></button>
+      {{else}}
+      <button data-action="join" class="button pull-right" >{{> ionIcon icon="ios-people-outline"}} <small>加入一起学</small></button>
+      {{/if}}
+<!--
+      {{#if isMentorMember}}
+      <button data-action='help' class="button button-positive pull-right" >{{> ionIcon icon="ios-heart"}} <small>正在帮他学</small></button>
+      {{else}}
+      <button data-action='help' class="button button-positive pull-right" >{{> ionIcon icon="ios-heart-outline"}} <small>我能够帮他</small></button>
+      {{/if}}
+-->
     {{/ionItem}}
   {{/with}}
 </template>
@@ -72,36 +82,32 @@
           -->
 
           <div class="padding text-left">
-            <h5>关键字: </h5>
-              <li>{{tagline}}</li>
-            <h5>可以承受学费：</h5>
-              <li>{{price}}</li>
-            <h5>愿意一起学: </h5>
-              <small>（{{numberOfMembers}} 人）</small>
-
-                {{#each members}}
-                  <a href="{{id}}" class="item-avatar" style='position:relative'>
-                    <!-- <img src="{{picture}}" height="40" width="40"> -->
-                    {{picture}}
-                  </a>
-                {{/each}}
-
-            {{#each voters}}
-              <a href="{{pathFor 'users.show'}}" class="item-avatar" style='position:relative'>
-                  <img src="{{profile.avatar_url}}" height="40" width="40">
+            <h5>自身基础: </h5>
+              <li>{{background}}</li>
+            <h5>期望达到效果：</h5>
+              <li>{{result}}</li>
+            <h5>可以承受费用：</h5>
+              <li>{{expense}}</li>
+            <h5>{{numberOfMembers}} 人愿意一起学: </h5>
+            {{#each teamMembers}}
+            <li>
+              <a href="/users/{{this}}" style='position:relative'>
+                <!-- <img src="{{picture}}" height="40" width="40"> -->
+                @{{getusername this}}
               </a>
+            </li>
             {{/each}}
           </div>
           <br>
         {{/with}}
-
+<!--
         <div class="padding product-detail-comments">
           <h5>评论: <small>{{numberOfComments}}</small></h5>
           <button class="button button-positive button-small button-circle button-new-comment" data-action="new-comment">
             {{>ionIcon icon="plus"}}
           </button>
         </div>
-
+-->
       </div>
 
     {{/ionContent}}

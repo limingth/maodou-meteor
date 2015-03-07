@@ -10,17 +10,52 @@ AutoForm.hooks({
 Template.goalsShow.helpers({
   numberOfMembers: function () {
     console.log ('members is :', this._id);
-    var members = Goals.findOne(this._id).members;
+    var members = Goals.findOne(this._id).teamMembers;
     return members.length;
+  },
+  getusername: function (id) {
+    console.log ('user id is :', id);
+    var u = Meteor.users.findOne(id);
+    return u.username;
   },
 });
 
 Template._goalItem.helpers({
   numberOfMembers: function () {
-    console.log ('members is :', this._id);
-    var members = Goals.findOne(this._id).members;
-    return members.length;
+    var members = this.teamMembers;
+    return members? members.length: 0;
   },
+  author: function () {
+    console.log ('author is :', this.userId);
+    var u = Meteor.users.findOne(this.userId);
+    return u;
+  },
+  isTeamMember: function () {
+    for (var i = 0; i < this.teamMembers.length; i++) {
+      var mid = this.teamMembers[i];
+      console.log("m id: ", mid);
+      console.log("current id:", Meteor.userId());
+      if (mid == Meteor.userId())
+      {
+        console.log ('you are in this group');
+        return true;
+      }
+    }
+    return false;
+  },
+  isMentorMember: function () {
+    for (var i = 0; i < this.teamMembers.length; i++) {
+      var mid = this.teamMembers[i];
+      console.log("m id: ", mid);
+      console.log("current id:", Meteor.userId());
+      if (mid == Meteor.userId())
+      {
+        console.log ('you are in this group');
+        return true;
+      }
+    }
+    return false;
+  }
 });
 
 Template._goalItem.events({
@@ -32,26 +67,24 @@ Template._goalItem.events({
     console.log ("Join team clicked!");
     console.log (this);
 
-    for (i = 0; i < this.members.length; i++) {
-      var m = this.members[i];
-      console.log("m id: ", m.id);
+    for (var i = 0; i < this.teamMembers.length; i++) {
+      var mid = this.teamMembers[i];
+      console.log(i, ": m id: ", mid);
       console.log("current id:", Meteor.userId());
-      if (m.id == Meteor.userId())
+      if (mid == Meteor.userId())
       {
-        console.log ('you are in this group');
         alert('you are in this group Already');
-        return;
+        return ;
       }
     }
 
     var g = this;
     console.log ("join id: ", Meteor.userId());
     console.log ("join picture: ", Meteor.user().username);
-    g.members.push({ id: Meteor.userId(), picture: Meteor.user().username});
+    g.teamMembers.push(Meteor.userId());
 
     var modifies = {
-      count: g.members.length,
-      members: g.members,
+      teamMembers: g.teamMembers,
     }
 
     Goals.update(this._id, {$set: modifies}, function(error) {
