@@ -1,5 +1,5 @@
 <template name="newGoal">
-  {{#ionModal focusFirstInput=true title="发布新目标"}}
+  {{#ionModal focusFirstInput=true title="发布新项目"}}
     {{> quickForm collection="Goals" id="goal-new-form" type="insert" omitFields="userId,voterIds,numberOfVotes,numberOfComments,createdAt,teamMembers" buttonContent="发布"}}
   {{/ionModal}}
 </template>
@@ -110,6 +110,10 @@
             <button data-action="join" class="button button-positive pull-right" >{{> ionIcon icon="ios-people"}} &nbsp;<small>已在该小组</small></button>
             {{else}}
             <button data-action="join" class="button pull-right" >{{> ionIcon icon="ios-people-outline"}} &nbsp;<small>加入一起学</small></button>
+            {{/if}}
+
+            {{#if isTeamOwner}}
+            <button data-action="delete" class="button" >{{> ionIcon icon="backspace"}} &nbsp;<small>删除该小组</small></button>
             {{/if}}
           </div>
         {{/with}}

@@ -13,6 +13,10 @@ Template.registerHelper('memberOf', function(group) {
   });
 });
 
+Template.registerHelper('ownerOf', function(group) {
+  return Meteor.userId() === group.userId;
+});
+
 Template.goals.helpers({
   goals: function () {
     return Goals.find({}, {limit:100, sort:{'numberOfVotes':-1, 'numberOfComments':-1}});
@@ -33,6 +37,13 @@ Template.goalsShow.helpers({
   isTeamMember: function () {
     console.log(this);
     if (!UI._globalHelpers.memberOf(this))
+      return false;
+    else
+      return true;
+  },
+  isTeamOwner: function () {
+    console.log(this);
+    if (!UI._globalHelpers.ownerOf(this))
       return false;
     else
       return true;
@@ -71,7 +82,13 @@ Template.goalsShow.events({
         return alert(error.reason);
       }
     });
-  }
+  },
+   'click [data-action=delete]': function (event, template) {
+    console.log ("Delete goal clicked!");
+
+    Goals.remove(this._id);
+    Router.go('welcome');
+  },
 });
 
 Template._goalItem.helpers({

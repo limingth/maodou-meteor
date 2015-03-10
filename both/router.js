@@ -12,13 +12,7 @@ Meteor.startup(function () {
 });
 
 Router.route('/', function () {
-  this.render('welcome', {
-    data: function () { 
-      return {
-        goals: Goals.find()
-      }
-    }
-  });
+  this.render('welcome');
 });
 
 Router.route('/goals/:_id', {
