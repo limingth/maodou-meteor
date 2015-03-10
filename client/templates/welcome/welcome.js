@@ -7,8 +7,3 @@ Template.welcome.helpers({
 });
 
 
-Template.welcome.helpers({
-  goals: function () {
-    return Goals.find({}, {limit:100, sort:{'numberOfVotes':-1, 'numberOfComments':-1}});
-  }
-});

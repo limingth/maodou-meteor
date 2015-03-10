@@ -25,17 +25,13 @@
   {{#ionView}}
     {{#ionContent}}
       <div class="padding">
-      {{#if currentUser}}
+      {{#if true}}
         <div class="padding">
-          <h2>欢迎你，{{username}} </h2>
-          <p><strong>毛豆网最新发布学习目标</strong></p>
-
-          {{#ionList}}
-            {{#each goals}}
-              {{> _goalItem goal=this path="goals.show"}}
-            {{/each}}
-          {{/ionList}}
-
+          {{#if currentUser}}
+            <h4>欢迎你，{{username}} </h4>
+          {{/if}}
+          <h5><li>最新项目发布</li></h5>
+          {{> goals}}
         </div>
       {{else}}
         {{> atForm}}

@@ -4,6 +4,14 @@
   {{/ionModal}}
 </template>
 
+<template name="goals">
+  {{#ionList}}
+    {{#each goals}}
+      {{> _goalItem goal=this path="goals.show"}}
+    {{/each}}
+  {{/ionList}}
+</template>
+
 <template name="_goalItem">
   {{#with goal}}
     {{#ionItem path=../path iconLeft=true iconRight=true avatar=true}}
@@ -12,7 +20,7 @@
         <!-- {{tagline}} -->
         {{#with author}}
             {{profile.name}} 
-            <a href="/users/{{_id}}">@{{username}}</a> 发起了
+            <a href="/users/{{_id}}">@{{username}}</a> 发起了项目
         {{/with}}
       </small>
       <h2>{{desc}}</h2>
@@ -23,9 +31,9 @@
     {{/ionItem}}
     {{#ionItem buttonRight=true avatar=true}}
       {{#if isTeamMember}}
-      <button data-action="join" class="button button-positive pull-right" >{{> ionIcon icon="ios-people"}} <small>已在该小组</small></button>
+      <button data-action="join" class="button button-positive pull-right" >{{> ionIcon icon="ios-people"}} &nbsp;<small>已在该小组</small></button>
       {{else}}
-      <button data-action="join" class="button pull-right" >{{> ionIcon icon="ios-people-outline"}} <small>加入一起学</small></button>
+      <button data-action="join" class="button pull-right" >{{> ionIcon icon="ios-people-outline"}} &nbsp;<small>加入一起学</small></button>
       {{/if}}
 <!--
       {{#if isMentorMember}}
@@ -62,7 +70,7 @@
             </h2>
             {{#with author}}
               <p>
-                <small>发布者：<a href="{{pathFor 'users.show'}}" class="dark">{{username}}</a></small>
+                <small>发起人：<a href="{{pathFor 'users.show'}}" class="dark">{{username}}</a></small>
               </p>
             {{/with}}   
             <span class="date-posted">
@@ -82,13 +90,13 @@
           -->
 
           <div class="padding text-left">
-            <h5>自身基础: </h5>
+            <h5>所在行业</h5>
               <li>{{background}}</li>
-            <h5>期望达到效果：</h5>
+            <h5>一句话描述项目</h5>
               <li>{{result}}</li>
-            <h5>可以承受费用：</h5>
+            <h5>为实现MVP愿意支付的费用</h5>
               <li>{{expense}}</li>
-            <h5>{{numberOfMembers}} 人愿意一起学: </h5>
+            <h5>项目已招募到 {{numberOfMembers}} 人正在一起协作学习开发</h5>
             {{#each teamMembers}}
             <li>
               <a href="/users/{{this}}" style='position:relative'>
@@ -97,9 +105,17 @@
               </a>
             </li>
             {{/each}}
+             <br>
+            {{#if isTeamMember}}
+            <button data-action="join" class="button button-positive pull-right" >{{> ionIcon icon="ios-people"}} &nbsp;<small>已在该小组</small></button>
+            {{else}}
+            <button data-action="join" class="button pull-right" >{{> ionIcon icon="ios-people-outline"}} &nbsp;<small>加入一起学</small></button>
+            {{/if}}
           </div>
-          <br>
         {{/with}}
+
+
+
 <!--
         <div class="padding product-detail-comments">
           <h5>评论: <small>{{numberOfComments}}</small></h5>

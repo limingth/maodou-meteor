@@ -25,7 +25,7 @@ Goals.attachSchema(new SimpleSchema({
     label: "Answer",
     autoform: {
       'label-type': 'placeholder',
-      placeholder: '一句话描述目标(两个月学会meteor)'
+      placeholder: '项目名称(毛豆网)'
     },
     max: 200
   },
@@ -33,7 +33,7 @@ Goals.attachSchema(new SimpleSchema({
     type: String,
     autoform: {
       'label-type': 'placeholder',
-      placeholder: '自身基础(有两年c语言经验，web开发零基础)'
+      placeholder: '所在行业(在线教育)'
     },
     max: 200
   },
@@ -41,7 +41,7 @@ Goals.attachSchema(new SimpleSchema({
     type: String,
     autoform: {
       'label-type': 'placeholder',
-      placeholder: '期望达到效果(开发一个知乎类问答网站)'
+      placeholder: '一句话描述项目(在线协作学习社区)'
     },
     max: 200
   },
@@ -49,7 +49,7 @@ Goals.attachSchema(new SimpleSchema({
     type: Number,
     autoform: {
       'label-type': 'placeholder',
-      placeholder: '可以承受费用(500元)'
+      placeholder: '可以承受费用(5000元)'
     },
     max: 100000
   },

@@ -7,6 +7,18 @@ AutoForm.hooks({
     }
 });
 
+Template.registerHelper('memberOf', function(group) {
+  return Meteor.userId() && _.find(group.teamMembers, function(member) {
+    return member === Meteor.userId();
+  });
+});
+
+Template.goals.helpers({
+  goals: function () {
+    return Goals.find({}, {limit:100, sort:{'numberOfVotes':-1, 'numberOfComments':-1}});
+  }
+});
+
 Template.goalsShow.helpers({
   numberOfMembers: function () {
     console.log ('members is :', this._id);
@@ -18,6 +30,48 @@ Template.goalsShow.helpers({
     var u = Meteor.users.findOne(id);
     return u.username;
   },
+  isTeamMember: function () {
+    console.log(this);
+    if (!UI._globalHelpers.memberOf(this))
+      return false;
+    else
+      return true;
+  }
+});
+
+
+Template.goalsShow.events({
+
+ 'click [data-action=join]': function (event, template) {
+    console.log ("Join team clicked!");
+    var modifies;
+
+    if (Meteor.user() == null)
+    {
+      //alert('You should log in before join this team');
+      Router.go('profile');
+    }
+
+    if (UI._globalHelpers.memberOf(this))
+    {
+      alert('you are in this group Already');
+      return;
+    }
+
+    this.teamMembers.push(Meteor.userId());
+
+    modifies = {
+      teamMembers: this.teamMembers
+    };
+
+    Goals.update(this._id, {
+      $set: modifies
+    }, function(error) {
+      if (error) {
+        return alert(error.reason);
+      }
+    });
+  }
 });
 
 Template._goalItem.helpers({
@@ -66,6 +120,12 @@ Template._goalItem.events({
   'click [data-action=join]': function (event, template) {
     console.log ("Join team clicked!");
     console.log (this);
+
+    if (Meteor.user() == null)
+    {
+      //alert('You should log in before join this team');
+      Router.go('profile');
+    }
 
     for (var i = 0; i < this.teamMembers.length; i++) {
       var mid = this.teamMembers[i];
