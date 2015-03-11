@@ -24,6 +24,7 @@
             {{#each emails}}
               <p>Email: {{address}}</p>
             {{/each}}
+            <img src="{{get_avatar_url this}}">
           {{/with}}
         </div>
       {{else}}
@@ -51,7 +52,7 @@
             {{#each emails}}
               <p>Email: {{address}}</p>
             {{/each}}
-
+            <img src="{{get_avatar_url this}}">
           {{#ionList}}
            
             {{#each votedProducts}}

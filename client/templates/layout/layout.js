@@ -9,21 +9,21 @@ Template.ionBody.events({
     if (!IonSideMenu.snapper) {
       return;
     }
-    console.log ("menu-close clicked!");
+//    console.log ("menu-close clicked!");
     IonSideMenu.snapper.close();
   },
   'click [data-ion-menu-welcome]': function (event, template) {
-    console.log ("menu-welcome clicked!");
+//    console.log ("menu-welcome clicked!");
     Router.go('/welcome');
     IonSideMenu.snapper.close();
   },
   'click [data-ion-menu-profile]': function (event, template) {
-    console.log ("menu-profile clicked!");
+//    console.log ("menu-profile clicked!");
     Router.go('/profile');
     IonSideMenu.snapper.close();
   },
   'click [data-ion-menu-settings]': function (event, template) {
-    console.log ("menu-settings clicked!");
+ //   console.log ("menu-settings clicked!");
     Router.go('/settings');
     IonSideMenu.snapper.close();
   },

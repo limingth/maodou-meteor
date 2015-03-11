@@ -15,7 +15,7 @@ Meteor.publishComposite('goal', function(_id) {
       },
       {
         find: function(goal) {
-            console.log('inside children', goal, goal.userId);
+//            console.log('inside children', goal, goal.userId);
             // Find post author. Even though we only want to return
             // one record here, we use "find" instead of "findOne"
             // since this function should return a cursor.

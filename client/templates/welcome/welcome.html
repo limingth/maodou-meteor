@@ -28,8 +28,13 @@
       {{#if true}}
         <div class="padding">
           {{#if currentUser}}
-            <h4>欢迎你，{{username}} </h4>
+            <h4>欢迎你，{{hisname}} </h4>
           {{/if}}
+          <p>目前毛豆网移动版上已有 {{usercount}} 个学习用户，<br>他们是
+            {{#each users}}
+              <a href="{{pathFor 'users.show'}}"> @{{username}}</a>,
+            {{/each}}
+          </p>
           <h5><li>最新项目发布</li></h5>
           {{> goals}}
         </div>
