@@ -90,6 +90,30 @@ Template.goalsShow.events({
     Goals.remove(this._id);
     Router.go('welcome');
   },
+  'click [data-action=outgroup]': function (event, template) {
+            //console.log ("Member  out");
+            var g = this;
+            var i ;
+            for(i = 0 ;i < g.teamMembers.length ; i++){
+                  if(g.teamMembers[i] == Meteor.userId()){
+                            break;
+                  }
+            }
+            g.teamMembers.splice( i , 1 );
+
+             var modifies = {
+              teamMembers: g.teamMembers,
+            }
+
+            Goals.update(this._id, {$set: modifies}, function(error) {
+              if (error) {
+                // display the error to the user
+                alert(error.reason);
+              } else {
+                Router.go('welcome');
+              }
+            });
+          },
 });
 
 Template._goalItem.helpers({
