@@ -108,6 +108,10 @@
              <br>
             {{#if isTeamMember}}
             <button data-action="join" class="button button-positive pull-right" >{{> ionIcon icon="ios-people"}} &nbsp;<small>已在该小组</small></button>
+            {{#if isTeamOwner}}
+            {{else}}
+             <button data-action="outgroup" class="button button-positive pull-right" >{{> ionIcon icon="backspace"}}  &nbsp;<small>退出该小组</small></button>
+            {{/if}}
             {{else}}
             <button data-action="join" class="button pull-right" >{{> ionIcon icon="ios-people-outline"}} &nbsp;<small>加入一起学</small></button>
             {{/if}}
