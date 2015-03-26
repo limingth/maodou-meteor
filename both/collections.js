@@ -1,5 +1,7 @@
 Goals = new Mongo.Collection('goals');
 
+Projects = new Mongo.Collection('projects');
+
 Goals.before.insert(function (userId, doc) {
   doc.createdAt = new Date();
 });
@@ -19,8 +21,10 @@ Goals.helpers({
 */
 });
 
-Goals.attachSchema(new SimpleSchema({
-  desc: {
+// refer to https://developer.github.com/v3/repos/
+
+Projects.attachSchema(new SimpleSchema({
+  name: {
     type: String,
     label: "Answer",
     autoform: {
@@ -29,64 +33,38 @@ Goals.attachSchema(new SimpleSchema({
     },
     max: 200
   },
-  background: {
+  description: {
     type: String,
-    autoform: {
-      'label-type': 'placeholder',
-      placeholder: '所在行业(在线教育)'
-    },
-    max: 200
-  },
-  result: {
-    type: String,
+    label: "Answer",
     autoform: {
       'label-type': 'placeholder',
       placeholder: '一句话描述项目(在线协作学习社区)'
     },
     max: 200
   },
-  expense: {
-    type: Number,
+  url: {
+    type: String,
+    label: "Answer",
     autoform: {
       'label-type': 'placeholder',
-      placeholder: '可以承受费用(5000元)'
+      placeholder: '项目Github Repo地址'
     },
-    max: 100000
+    max: 200
   },
-  userId: {
-    type: String,
-    autoValue: function () {
-      if (this.isSet) {
-        return;
-      }
-      if (this.isInsert) {
-        return Meteor.userId();
-      } else {
-        this.unset();
-      }
-    }
-  },
-  createdAt: {
-    type: Date,
-    autoValue: function () {
-      if (this.isInsert) {
-        return new Date();
-      } else {
-        this.unset();
-      }
-    }
-  },
-  teamMembers: {
-    type: [String],
-    autoValue: function () {
-      if (this.isSet) {
-        return;
-      }
-      if (this.isInsert) {
-        return [Meteor.userId()];
-      } else {
-        this.unset();
-      }
-    }
-  }
+  steps: {
+      type: Array,
+      optional: true,
+      minCount: 0,
+      maxCount: 100
+   },
+   "steps.$": {
+      type: Object,
+      optional: true
+   },
+   "steps.$.description": {
+      type: String
+   },
+   "steps.$.snapshot_url": {
+      type: String
+   }
 }));

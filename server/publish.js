@@ -1,26 +1,26 @@
-Meteor.publish('goals', function() {
-  return Goals.find();
+Meteor.publish('projects', function() {
+  return Projects.find();
 });
 
-Meteor.publishComposite('goal', function(_id) {
+Meteor.publishComposite('project', function(_id) {
   return {
     find: function() {
-      return Goals.find({_id: _id});
+      return Projects.find({_id: _id});
     },
     children: [
       {
-        find: function(goal) {
-          return Meteor.users.find({_id: goal.userId});
+        find: function(project) {
+          return Meteor.users.find({_id: Projects.ownerId});
         }
       },
       {
-        find: function(goal) {
+        find: function(project) {
 //            console.log('inside children', goal, goal.userId);
             // Find post author. Even though we only want to return
             // one record here, we use "find" instead of "findOne"
             // since this function should return a cursor.
             return Meteor.users.find(
-                { _id: goal.userId },
+                { _id: project.ownerId },
                 { fields: {username: 1, emails: 1, createdAt: 1} });
         }
       },

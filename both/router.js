@@ -23,6 +23,10 @@ Router.route('/users/:_id', {
   name: 'users.show'
 });
 
+Router.route('/projects/:_id', {
+  name: 'projects.show'
+});
+
 Router.map(function() {
   this.route('profile');
   this.route('welcome');

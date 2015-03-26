@@ -25,6 +25,17 @@ GoalsShowController = AppController.extend({
   }
 });
 
+ProjectsShowController = AppController.extend({
+  waitOn: function () {
+    return Meteor.subscribe('project', this.params._id);
+  },
+  data: function () {
+    return {
+      project: Projects.findOne({_id: this.params._id}),
+    };
+  }
+});
+
 Goals.helpers({
   datePosted: function () {
     // http://momentjs.com/

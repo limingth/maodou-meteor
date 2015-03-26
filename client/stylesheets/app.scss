@@ -54,3 +54,15 @@ element.style {
 .loading-container .loading {
   font-size: 25px;
 }
+
+li.item-desc {
+  text-align: left;
+}
+
+.item-body {
+  overflow: auto;
+  padding: 16px;
+  text-overflow: inherit;
+  white-space: normal;
+  text-align: center;
+}

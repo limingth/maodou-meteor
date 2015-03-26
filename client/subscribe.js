@@ -1,4 +1,4 @@
-Meteor.subscribe('goals');
+Meteor.subscribe('projects');
 
 Meteor.subscribe('goal');
 
