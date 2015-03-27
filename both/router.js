@@ -32,5 +32,6 @@ Router.map(function() {
   this.route('welcome');
   this.route('settings');
   this.route('newGoal');
+  this.route('newProject');
 });
 

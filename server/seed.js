@@ -29,12 +29,12 @@ Meteor.startup(function () {
     Projects.insert({
       name: "MeteorBB开源社区",
       description: "BBS论坛",
-      url: "https://github.com/limingth/maodou/",
+      url: "https://github.com/cobola/meteorbb",
     });
     Projects.insert({
       name: "滴滴拉屎Meteor版",
       description: "山寨版",
-      url: "https://github.com/limingth/maodou/",
+      url: "https://github.com/limingth/didipoop/",
     });
   }
 

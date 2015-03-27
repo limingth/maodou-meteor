@@ -3,3 +3,4 @@ Template.projects.helpers({
     return Projects.find({}, {limit:100, sort:{}});
   }
 });
+

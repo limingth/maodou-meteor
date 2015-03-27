@@ -11,6 +11,13 @@
   {{/ionList}}
 </template>
 
+<template name="newProject">
+  {{#ionModal focusFirstInput=true title="发布新项目"}}
+    {{> quickForm collection="Projects" id="project-new-form" type="insert" omitFields="userId,created_at" buttonContent="发布"}}
+  {{/ionModal}}
+</template>
+
+
 <template name="projectsShow">
   {{#contentFor "headerButtonLeft"}}
     {{>ionNavBackButton class="button" text=false}}
@@ -29,11 +36,12 @@
             <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png">
             <h2>{{name}}</h2>
             <p>{{description}}</p>
-            {{url}}
+            
           </div>
+          
+          <p> &nbsp; {{url}} </p>
 
           <div class="item item-body">
-           
             <h4>开始参与项目开发</h4>
             
             {{#each steps}}

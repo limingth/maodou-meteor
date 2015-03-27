@@ -7,6 +7,15 @@ AutoForm.hooks({
     }
 });
 
+AutoForm.hooks({
+    'project-new-form': {
+        onSuccess: function (operation, result, template) {
+            IonModal.close();
+            Router.go('projects.show', {_id: result});
+        }
+    }
+});
+
 Template.registerHelper('memberOf', function(group) {
   return Meteor.userId() && _.find(group.teamMembers, function(member) {
     return member === Meteor.userId();
