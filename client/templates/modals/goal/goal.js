@@ -13,6 +13,18 @@ AutoForm.hooks({
             IonModal.close();
             Router.go('projects.show', {_id: result});
         }
+    },
+      'group-email-form': {
+        onSubmit: function (doc) {
+            //console.log("Send email");
+          // console.log(Projects.findOne(this._id).teamMembersEmail[0]);
+          //var members  = Projects.findOne(result).teamMembersEmail;
+          //console.log(members.length);
+            Meteor.call('sendEmail',doc,this.teamMembersEmail);
+            IonModal.close();
+            //console.log("Send email");
+            Router.go('goals.show', {_id: result});
+        }
     }
 });
 

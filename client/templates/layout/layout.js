@@ -14,7 +14,7 @@ Template.ionBody.events({
   },
   'click [data-ion-menu-welcome]': function (event, template) {
 //    console.log ("menu-welcome clicked!");
-    Router.go('/welcome');
+    Router.go('/');
     IonSideMenu.snapper.close();
   },
   'click [data-ion-menu-profile]': function (event, template) {

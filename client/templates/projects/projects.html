@@ -13,7 +13,13 @@
 
 <template name="newProject">
   {{#ionModal focusFirstInput=true title="发布新项目"}}
-    {{> quickForm collection="Projects" id="project-new-form" type="insert" omitFields="userId,created_at" buttonContent="发布"}}
+    {{> quickForm collection="Projects" id="project-new-form" type="insert" omitFields="teamMembers,teamMembersEmail" buttonContent="发布"}}
+  {{/ionModal}}
+</template>
+
+<template name="groupEmail">
+  {{#ionModal focusFirstInput=true title="发送小组邮件"}}
+    {{> quickForm collection="Emails" id="group-email-form" type="normal" buttonContent="发送"}}
   {{/ionModal}}
 </template>
 
@@ -36,13 +42,17 @@
             <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png">
             <h2>{{name}}</h2>
             <p>{{description}}</p>
-            
+            <p>目前本项目已有 {{usercount}} 人关注，<br>他们是
+            {{#each users}}
+              <a href="{{pathFor 'users.show'}}"> @{{username}}</a>,
+            {{/each}}
+          </p>
           </div>
           
           <p> &nbsp; {{url}} </p>
 
           <div class="item item-body">
-            <h4>开始参与项目开发</h4>
+            <h2>项目开发指导</h2>
             
             {{#each steps}}
               <li class="item-desc"> {{this.description}} <br> </li>
@@ -53,25 +63,24 @@
             
           </div>
 
-          <div class="item tabs tabs-secondary tabs-icon-left">
-            <a class="tab-item" href="#" data-action="fake">
+       <div class="item tabs tabs-secondary tabs-icon-left">
+            <a class="tab-item" href="#" data-ion-modal="groupEmail">
               <i class="icon ion-email"></i>
               写邮件
             </a>
-            <a class="tab-item" href="#" data-action="fake">
+            <a class="tab-item" href="#" data-action="concern">
               <i class="icon ion-eye"></i>
               关注
             </a>
-            <a class="tab-item" href="#" data-action="fake">
+            <a class="tab-item" href="#" data-action="share">
               <i class="icon ion-share"></i>
               分享
             </a>
           </div>
 
         </div>
-      {{/with}}    
+      {{/with }}    
 
     {{/ionContent}}
   {{/ionView}}
-
 </template>

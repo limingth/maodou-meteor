@@ -2,11 +2,34 @@ Goals = new Mongo.Collection('goals');
 
 Projects = new Mongo.Collection('projects');
 
+//ConcernedPeople = new Mongo.Collection('concernedPeople');
+Emails = new Mongo.Collection('emails');
+
+
 Goals.before.insert(function (userId, doc) {
   doc.createdAt = new Date();
 });
 
 Goals.helpers({
+  datePosted: function () {
+    // http://momentjs.com/
+    return moment(this.createdAt).format('l');
+  },
+  author: function () {
+    return Meteor.users.findOne({_id: this.userId});
+  },
+/*
+  voters: function () {
+    return Meteor.users.find({_id: {$in: this.voterIds}});
+  }
+*/
+});
+
+Projects.before.insert(function (userId, doc) {
+  doc.createdAt = new Date();
+});
+
+Projects.helpers({
   datePosted: function () {
     // http://momentjs.com/
     return moment(this.createdAt).format('l');
@@ -62,9 +85,102 @@ Projects.attachSchema(new SimpleSchema({
       optional: true
    },
    "steps.$.description": {
-      type: String
+      type: String,
+      label: "Answer",
+    autoform: {
+      'label-type': 'placeholder',
+      placeholder: '步骤描述'
+    },
    },
    "steps.$.snapshot_url": {
-      type: String
-   }
+      type: String,
+      label: "Answer",
+    autoform: {
+      'label-type': 'placeholder',
+      placeholder: '运行效果图'
+    },
+   },
+   teamMembers: {
+    type: [String],
+     autoValue: function () {
+      if (this.isSet) {
+        return;
+      }
+      if (this.isInsert) {
+        return [Meteor.userId()];
+      } else {
+        this.unset();
+      }
+    }
+  
+  },
+   teamMembersEmail: {
+     type: [String], 
+      autoValue: function () {
+      if (this.isSet) {
+        return;
+      }
+      if (this.isInsert) {
+        return [Meteor.userId()];
+      } else {
+        this.unset();
+      }
+    }
+      
+    },
+    
+}));
+/*
+ConcernedPeople.attachSchema(  new SimpleSchema({
+   teamMembers: {
+    type: [String],
+    autoValue: function () {
+      if (this.isSet) {
+        return;
+      }
+      if (this.isInsert) {
+        return [Meteor.userId()];
+      } else {
+        this.unset();
+      }
+    }
+  },
+   teamMembersEmail: {
+     type: [String],
+    autoValue: function () {
+      if (this.isSet) {
+        return;
+      }
+      if (this.isInsert) {
+        return [Meteor.userId()];
+      } else {
+        this.unset();
+      }
+    }
+    },*/
+Emails.attachSchema(  new SimpleSchema({
+    titles :{
+        type: String,
+          autoform: {
+      'label-type': 'placeholder',
+      placeholder: '邮件主题'
+    },
+        max: 50
+    },
+   /* email: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Email,
+        autoform: {
+      'label-type': 'placeholder',
+      placeholder: '邮箱地址'
+    },
+    },*/
+    message: {
+        type: String,
+        autoform: {
+      'label-type': 'placeholder',
+      placeholder: '邮件内容'
+    },
+        max: 1000
+    }
 }));

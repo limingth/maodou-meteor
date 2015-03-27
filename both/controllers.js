@@ -4,22 +4,22 @@ AppController = RouteController.extend({
 
 WelcomeController = AppController.extend({
   waitOn: function () {
-    return Meteor.subscribe('goals');
+    return Meteor.subscribe('projects');
   },
   data: function () {
     return {
-      goals: Goals.find({}, {sort: {}})
+      Projects: Projects.find({}, {sort: {}})
     };
   }
 });
 
 GoalsShowController = AppController.extend({
   waitOn: function () {
-    return Meteor.subscribe('goal', this.params._id);
+    return Meteor.subscribe('project', this.params._id);
   },
   data: function () {
     return {
-      goal: Goals.findOne({_id: this.params._id}),
+      Project: Projects.findOne({_id: this.params._id}),
       //comments: Comments.find({productId: this.params._id}, {sort: {createdAt: -1}})
     };
   }
@@ -50,7 +50,15 @@ Goals.helpers({
   }
 */
 });
-
+Projects.helpers({
+  datePosted: function () {
+    // http://momentjs.com/
+    return moment(this.createdAt).format('l');
+  },
+  author: function () {
+    return Meteor.users.findOne({_id: this.userId});
+  },
+});
 UsersShowController = AppController.extend({
   waitOn: function () {
     return Meteor.subscribe('user', this.params._id);

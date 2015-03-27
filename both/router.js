@@ -33,5 +33,6 @@ Router.map(function() {
   this.route('settings');
   this.route('newGoal');
   this.route('newProject');
+  this.route('groupEmail');
 });
 

@@ -1,6 +1,12 @@
 Meteor.publish('projects', function() {
   return Projects.find();
 });
+/*
+Meteor.publish('concernedPeople', function() {
+  return Projects.find();
+});
+
+*/
 
 Meteor.publishComposite('project', function(_id) {
   return {
@@ -10,7 +16,7 @@ Meteor.publishComposite('project', function(_id) {
     children: [
       {
         find: function(project) {
-          return Meteor.users.find({_id: Projects.ownerId});
+          return Meteor.users.find({_id: project.ownerId});
         }
       },
       {

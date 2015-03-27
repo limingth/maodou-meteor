@@ -20,11 +20,12 @@
       {{#if currentUser}}
         <div class="padding">
           {{#with user}}
+          <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png" width='250px' />
             <h2>{{username}} 的资料</h2>
             {{#each emails}}
               <p>Email: {{address}}</p>
             {{/each}}
-            <img src="{{get_avatar_url this}}">
+            
           {{/with}}
         </div>
       {{else}}
@@ -41,18 +42,20 @@
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
-    <h1 class="title">Profile of @{{user.username}}</h1>
+    <h1 class="title">{{user.username}}的个人资料</h1>
   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
 
         {{#with user}}
+        <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png" width='250px' />
+            
           <h2>{{username}} 的资料</h2>
             {{#each emails}}
               <p>Email: {{address}}</p>
             {{/each}}
-            <img src="{{get_avatar_url this}}">
+            
           {{#ionList}}
            
             {{#each votedProducts}}
