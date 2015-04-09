@@ -14,7 +14,7 @@ Meteor.startup(function () {
     });
   }
 */
-  if (Projects.find({}).count() >= 0) {
+  if (Projects.find({}).count() === 0) {
     Projects.remove({});
     Projects.insert({
       name: "毛豆网移动版",
