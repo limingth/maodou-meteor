@@ -20,10 +20,11 @@ AutoForm.hooks({
           // console.log(Projects.findOne(this._id).teamMembersEmail[0]);
           //var members  = Projects.findOne(result).teamMembersEmail;
           //console.log(members.length);
-            Meteor.call('sendEmail',doc,this.teamMembersEmail);
+            //console.log(this);
+            Meteor.call('sendEmail',doc);
             IonModal.close();
             //console.log("Send email");
-            Router.go('goals.show', {_id: result});
+            //Router.go('goals.show', {_id: result});
         }
     }
 });

@@ -14,15 +14,16 @@ Meteor.methods({
    sendEmail: function(doc,groupEmail) {
     // Important server-side check for security and data integrity
     console.log("Send email");
+   // console.log(object)
     //check(doc, Emails);
     
    //this.unblock();
 
     // Send the e-mail
-     console.log(groupEmail[0]);
+   //  console.log(groupEmail[0]);
     Email.send({
-        to:  "80994016@qq.com",
-        from: "lkmcudevelope@gmail.com",//Meteor.user().emails[0].address,
+        to: "lkmcudevelope@gmail.com" ,
+        from: "80994016@qq.com",//Meteor.user().emails[0].address,
         subject: doc.titles,
         text: doc.message
     });

@@ -17,6 +17,9 @@ Template.projects.helpers({
 
   projects: function () {
     return Projects.find({}, {limit:100, sort:{}});
+  },
+  projectMember:function(){
+    return concernedPeople.findOne(this._id).teamMembers
   }
 });
 
