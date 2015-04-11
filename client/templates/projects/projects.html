@@ -23,6 +23,16 @@
   {{/ionModal}}
 </template>
 
+<template name="_projectItem">
+  {{#with project}}
+    {{#ionItem path=../path iconRight=true}}
+      <h2>{{name}}</h2>
+      <p>
+        {{description}}
+      </p>
+    {{/ionItem}}
+  {{/with}}
+</template>
 
 <template name="projectsShow">
   {{#contentFor "headerButtonLeft"}}

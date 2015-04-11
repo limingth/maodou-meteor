@@ -29,3 +29,18 @@ Meteor.methods({
     });
   }
 });
+
+Meteor.methods({
+  'Projects.watch': function (_id) {
+    if (!Meteor.user()) {
+      return;
+    }
+
+    if (_(Meteor.user().watchedProjectIds).include(_id)) {
+      return;
+    }
+
+    //Projects.update({_id: _id}, {$addToSet: {watchers: this.userId}});
+    Meteor.users.update({_id: this.userId}, {$addToSet: {'watchedProjectIds': _id}});
+  }
+});

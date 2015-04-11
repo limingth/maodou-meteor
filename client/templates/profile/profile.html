@@ -20,7 +20,7 @@
       {{#if currentUser}}
         <div class="padding">
           {{#with user}}
-          <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png" width='250px' />
+          <img src="{{get_avatar_url this}}" width='250px' />
             <h2>{{username}} 的资料</h2>
             {{#each emails}}
               <p>Email: {{address}}</p>
@@ -49,17 +49,23 @@
     {{#ionContent}}
 
         {{#with user}}
-        <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png" width='250px' />
+        <img src="{{get_avatar_url this}}" width='250px' />
             
           <h2>{{username}} 的资料</h2>
             {{#each emails}}
               <p>Email: {{address}}</p>
             {{/each}}
             
+            <!--
+            {{#each watchedProjectIds}}
+              <p>Projects: {{this}}</p>
+            {{/each}}
+            -->
+          
           {{#ionList}}
-           
-            {{#each votedProducts}}
-              {{> _productItem product=this path="products.show"}}
+            已经关注的项目有：
+            {{#each watchedProjects}}
+              {{> _projectItem project=this path="projects.show"}}
             {{/each}}
           {{/ionList}}
         {{/with}}
