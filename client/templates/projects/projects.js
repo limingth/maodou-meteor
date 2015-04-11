@@ -177,5 +177,17 @@ Template.projectsShow.events({
    'click [data-action=groupEmail]': function (event, template) {
       console.log ("groupEmail!");
       console.log (this);
+
+       var watchers_emails = [];
+     //  author_email = Meteor.users.findOne(this.author_Id).emails[0].address
+    _.each(this.watchers, function(wid) {
+      console.log (wid);
+      //console.log(this);
+      
+      var u = Meteor.users.findOne(wid);
+      watchers_emails.push(u.emails[0].address);
+    });
+       console.log(watchers_emails[0]);
+       Meteor.call('sendEmail',watchers_emails[0]);
   },
-});
+}); 
