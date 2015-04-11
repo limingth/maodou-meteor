@@ -18,7 +18,7 @@
     {{#ionContent}}
       <div class="">
       {{#if currentUser}}
-        <div class="">
+        <div class="profile-wrapper">
           {{#with user}}
           <img src="{{get_avatar_url this}}" class="profile-main-img" />
             <!-- <h2>{{username}} 的资料</h2> -->
@@ -54,7 +54,7 @@
 
   {{#ionView}}
     {{#ionContent}}
-
+      <div class="profile-wrapper">
         {{#with user}}
         <img src="{{get_avatar_url this}}" class="profile-main-img" />
           <!-- <h2>{{username}} 的资料</h2> -->
@@ -75,7 +75,7 @@
             {{/each}}
           {{/ionList}}
         {{/with}}
-
+      </div>
     {{/ionContent}}
   {{/ionView}}
 </template>

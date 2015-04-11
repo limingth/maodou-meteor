@@ -97,7 +97,9 @@ li.item-desc {
   font-size: 18px;
   opacity: 0.4;
 }
-#WelcomeMain .list a.item {
+#WelcomeMain .list a.item,
+.profile-wrapper a.item {
   padding-top: 10px;
+  padding-bottom: 10px;
   margin-bottom: -10px;
 }
