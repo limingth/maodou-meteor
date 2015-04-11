@@ -18,8 +18,8 @@ Template.projects.helpers({
   projects: function () {
     return Projects.find({}, {limit:100, sort:{}});
   },
-  projectMember:function(){
-    return concernedPeople.findOne(this._id).teamMembers
+  watchers_count:function(){
+    return Projects.findOne(this._id).watchers.length;
   }
 });
 
@@ -81,9 +81,9 @@ Template.projectsShow.helpers({
     var u = Meteor.users.findOne(id);
     return u.username;
   },
-  isTeamMember: function () {
+  isWatcher: function () {
 //    console.log(this);
-    if (!UI._globalHelpers.memberOf(this))
+    if (!UI._globalHelpers.member_of_watchers(this))
       return false;
     else
       return true;
@@ -179,6 +179,11 @@ Template.projectsShow.events({
 
     //Meteor.user().watchedProjects.push(this._id);
     Meteor.call('Projects.watch', this._id);
+  },
+ 'click [data-action=unwatch]': function (event, template) {
+    console.log ("unWatch buttion clicked!");
+    //Meteor.user().watchedProjects.push(this._id);
+    Meteor.call('Projects.unwatch', this._id);
   },
    'click [data-action=share]': function (event, template) {
     console.log ("share!");
