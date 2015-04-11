@@ -23,6 +23,15 @@ Template.projects.helpers({
   }
 });
 
+Template.projects.rendered = function () {
+  setTimeout(function () {
+    $('.welcome-hint').hide(1000);
+  }, 2000);
+  $('.welcome-header').on('click', function () {
+    $('.welcome-brief').toggle(500);
+  })
+}
+
 Template.registerHelper('member_of_watchers', function(group) {
   return Meteor.userId() && _.find(group.watchers, function(member) {
     return member === Meteor.userId();
