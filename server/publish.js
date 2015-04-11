@@ -39,6 +39,7 @@ Meteor.publish("users", function (opts) {
     'emails': 1,
     'username': 1,
     'createdAt': 1,
+    'watchedProjectIds': 1,
   };  
   // userFields = {}
   // var res = Meteor.users.find( search ,{fields: userFields, sort:{updatedAt:-1} } );

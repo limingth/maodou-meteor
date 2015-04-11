@@ -43,7 +43,7 @@ Template.projectsShow.helpers({
   },
   watchers_count: function () {
     //return Meteor.user().emails[0].address;
-    return this.watchers.length-1;
+    return this.watchers.length;
   },
   watchers: function () {
     //return Meteor.user().emails[0].address;
@@ -151,11 +151,13 @@ Template.projectsShow.events({
       return;
     }
 
+/*
     if (UI._globalHelpers.member_of_watchers(this))
     {
       alert('You have watched already');
       return;
     }
+*/
 
     this.watchers.push(Meteor.userId());
     modifies = {
@@ -169,6 +171,9 @@ Template.projectsShow.events({
         return alert(error.reason);
       }
     });
+
+    //Meteor.user().watchedProjects.push(this._id);
+    Meteor.call('Projects.watch', this._id);
   },
    'click [data-action=share]': function (event, template) {
     console.log ("share!");
