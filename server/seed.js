@@ -14,8 +14,13 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
     });
   }
 */
+<<<<<<< HEAD
   if (Projects.find({}).count() == 0) {
     //Projects.remove({});
+=======
+  if (Projects.find({}).count() === 0) {
+    Projects.remove({});
+>>>>>>> 5afa45fbe17a53c3402de8f3427fd2a96aa2ed0a
     Projects.insert({
       name: "毛豆网移动版",
       description: "在线协作学习社区",
