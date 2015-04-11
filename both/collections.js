@@ -100,7 +100,7 @@ Projects.attachSchema(new SimpleSchema({
       placeholder: '运行效果图'
     },
    },
-   teamMembers: {
+   watchers: {
     type: [String],
      autoValue: function () {
       if (this.isSet) {
@@ -112,52 +112,10 @@ Projects.attachSchema(new SimpleSchema({
         this.unset();
       }
     }
-  
   },
-   teamMembersEmail: {
-     type: [String], 
-      autoValue: function () {
-      if (this.isSet) {
-        return;
-      }
-      if (this.isInsert) {
-        return [Meteor.userId()];
-      } else {
-        this.unset();
-      }
-    }
-      
-    },
     
 }));
-/*
-ConcernedPeople.attachSchema(  new SimpleSchema({
-   teamMembers: {
-    type: [String],
-    autoValue: function () {
-      if (this.isSet) {
-        return;
-      }
-      if (this.isInsert) {
-        return [Meteor.userId()];
-      } else {
-        this.unset();
-      }
-    }
-  },
-   teamMembersEmail: {
-     type: [String],
-    autoValue: function () {
-      if (this.isSet) {
-        return;
-      }
-      if (this.isInsert) {
-        return [Meteor.userId()];
-      } else {
-        this.unset();
-      }
-    }
-    },*/
+
 Emails.attachSchema(  new SimpleSchema({
     titles :{
         type: String,

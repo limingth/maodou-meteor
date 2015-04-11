@@ -23,8 +23,8 @@ Template.projects.helpers({
   }
 });
 
-Template.registerHelper('memberOf', function(group) {
-  return Meteor.userId() && _.find(group.teamMembers, function(member) {
+Template.registerHelper('member_of_watchers', function(group) {
+  return Meteor.userId() && _.find(group.watchers, function(member) {
     return member === Meteor.userId();
   });
 });
@@ -41,13 +41,25 @@ Template.projectsShow.helpers({
     //return Meteor.user().emails[0].address;
     return Meteor.user().username;
   },
-  usercount: function () {
+  watchers_count: function () {
     //return Meteor.user().emails[0].address;
-    return this.teamMembers.length-1;
+    return this.watchers.length-1;
   },
-  users: function () {
+  watchers: function () {
     //return Meteor.user().emails[0].address;
-    return  Meteor.users.find().fetch();
+
+    //Meteor.users.find({}, {limit:100, sort:{}});
+    //_.each(this.watchers)
+    var watchers = [];
+
+    _.each(this.watchers, function(wid) {
+      console.log (wid);
+      var u = Meteor.users.findOne(wid);
+      watchers.push(u);
+    });
+
+    console.log (watchers);
+    return watchers;
   },
 
 
@@ -126,9 +138,9 @@ Template.projectsShow.events({
       }
     });
   },
- 'click [data-action=concern]': function (event, template) {
-  console.log ("Join team clicked!");
-  console.log(this.teamMembersEmail[0]);
+ 'click [data-action=watch]': function (event, template) {
+    console.log ("Watch buttion clicked!");
+
     var modifies;
 
     if (Meteor.user() == null)
@@ -139,33 +151,18 @@ Template.projectsShow.events({
       return;
     }
 
-    if (UI._globalHelpers.memberOf(this))
+    if (UI._globalHelpers.member_of_watchers(this))
     {
-      alert('You have concerned  already');
+      alert('You have watched already');
       return;
     }
 
-    this.teamMembers.push(Meteor.userId());
-
+    this.watchers.push(Meteor.userId());
     modifies = {
-      teamMembers: this.teamMembers
+      watchers: this.watchers
     };
 
-   Projects.update(this._id, {
-      $set: modifies
-    }, function(error) {
-      if (error) {
-        return alert(error.reason);
-      }
-    });
-
-   this.teamMembersEmail.push(Meteor.user().emails[0].address);
-
-    modifies = {
-     teamMembersEmail: this.teamMembersEmail
-    };
-
-   Projects.update(this._id, {
+    Projects.update(this._id, {
       $set: modifies
     }, function(error) {
       if (error) {
@@ -174,8 +171,11 @@ Template.projectsShow.events({
     });
   },
    'click [data-action=share]': function (event, template) {
-  console.log ("share!");
+    console.log ("share!");
     var modifies;
-},
-   
+  },
+   'click [data-action=groupEmail]': function (event, template) {
+      console.log ("groupEmail!");
+      console.log (this);
+  },
 });

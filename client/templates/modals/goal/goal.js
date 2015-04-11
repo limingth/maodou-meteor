@@ -16,13 +16,14 @@ AutoForm.hooks({
     },
       'group-email-form': {
         onSubmit: function (doc) {
-            //console.log("Send email");
+            console.log("Send email");
           // console.log(Projects.findOne(this._id).teamMembersEmail[0]);
           //var members  = Projects.findOne(result).teamMembersEmail;
           //console.log(members.length);
-            //console.log(this);
-            Meteor.call('sendEmail',doc);
-            IonModal.close();
+            console.log(this);
+            console.log(doc);
+            //Meteor.call('sendEmail',doc);
+            //IonModal.close();
             //console.log("Send email");
             //Router.go('goals.show', {_id: result});
         }
