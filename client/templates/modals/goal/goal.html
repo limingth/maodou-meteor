@@ -15,14 +15,15 @@
 <template name="_goalItem">
   {{#with goal}}
     {{#ionItem path=../path iconLeft=true iconRight=true avatar=true}}
-      <img src='/maodou-logo.png' width='60px'/>
-      <small>
+      <!-- <img src='/maodou-logo.png' width='60px'/> -->
+      {{#with author}}
+        <img src="{{get_avatar_url this}}">
+        <small>
         <!-- {{tagline}} -->
-        {{#with author}}
             {{profile.name}} 
             <a href="/users/{{_id}}">@{{username}}</a> 发起了项目
-        {{/with}}
-      </small>
+        </small>
+      {{/with}}
       <h2>{{desc}}</h2>
       <span class="comments-count">
         {{numberOfComments}}

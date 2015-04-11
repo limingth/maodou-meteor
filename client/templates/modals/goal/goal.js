@@ -17,6 +17,11 @@ Template.registerHelper('ownerOf', function(group) {
   return Meteor.userId() === group.userId;
 });
 
+Template.registerHelper('get_avatar_url', function(usr) {
+  var u = Meteor.users.findOne(usr._id);
+  return Avatar.getUrl(u) || '/maodou-logo.png';
+});
+
 Template.goals.helpers({
   goals: function () {
     return Goals.find({}, {limit:100, sort:{'numberOfVotes':-1, 'numberOfComments':-1}});
