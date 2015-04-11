@@ -11,26 +11,21 @@ Meteor.methods({
     console.log ('delete username is ', user.username);
     Meteor.users.remove(_id);
   },
-   sendEmail: function(groupEmail) {
+   sendEmail: function(email) {
     // Important server-side check for security and data integrity
-    console.log("Send email");
+    console.log("server is sending email to ", email);
    // console.log(object)
     //check(doc, Emails);
-    console.log(groupEmail);
-    /*
-    for(i = 1;i<groupEmail.length;i++){
-          Email.send({
-          to: groupEmail[i],
-          from: "80994016@qq.com",//Meteor.user().emails[0].address,
-          subject: doc.titles,
-          text: doc.message
-      });
-    }*/
-   //this.unblock();
+    console.log(email);
 
-    // Send the e-mail
-   //  console.log(groupEmail[0]);
+    Email.send({
+      to: email,
+      from: Meteor.user().emails[0].address,
+      subject: "Hi",
+      text: "I love this project!"
+      });
     
+    //this.unblock();
   }
 });
 
