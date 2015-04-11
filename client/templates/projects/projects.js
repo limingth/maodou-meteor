@@ -42,7 +42,11 @@ Template.registerHelper('ownerOf', function(group) {
   return Meteor.userId() === group.userId;
 });
 
-
+Template.registerHelper('get_avatar_url', function(project) {
+  var u = Meteor.users.findOne(project.owner);
+  return Avatar.getUrl(u) || "http://alaframboise.github.io/presentations/esrigithub/images/github.png";
+  // '/maodou-logo.png';
+});
 
 Template.projectsShow.helpers({
 
@@ -76,10 +80,10 @@ Template.projectsShow.helpers({
     var members = concernedPeople.findOne(this._id).teamMembers;
     return members.length;
   },
-  getusername: function (id) {
-//    console.log ('user id is :', id);
-    var u = Meteor.users.findOne(id);
-    return u.username;
+  owner: function () {
+    console.log ('this is :', this);
+    var u = Meteor.users.findOne(this.owner);
+    return u;
   },
   isWatcher: function () {
 //    console.log(this);

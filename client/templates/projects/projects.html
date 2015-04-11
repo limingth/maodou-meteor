@@ -2,10 +2,11 @@
   {{#ionList}}
     {{#each projects}}
        {{#ionItem path="projects.show" conLeft=true iconRight=true avatar=true}}
-        <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png" />
-        <i class="icon ion-person-stalker project-person-amount">12</i>
+        <!-- <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png" /> -->
+        <img src="{{get_avatar_url this}}">
+        <i class="icon ion-person-stalker project-person-amount">{{watchers_count}}</i>
         <h2>{{name}}</h2>
-        <p>{{description}}, 关注度：{{watchers_count}} </p>
+        <p>{{description}}</p>
         <!-- <a href={{url}}>{{url}}</a> -->
       {{/ionItem}}
     {{/each}}
@@ -52,10 +53,14 @@
           <div class="item item-avatar">
             <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png">
             <h2>{{name}}</h2>
-            <p>{{description}}</p>
+            <p>{{description}}, 创建者 
+            {{#with owner}}
+              <a href="{{pathFor 'users.show'}}">{{username}}</a> 
+            {{/with}}
+            </p>
             <p>目前本项目已有 {{watchers_count}} 人关注，<br>他们是
             {{#each watchers}}
-              <a href="{{pathFor 'users.show'}}"> @{{username}}</a>,
+              <a href="{{pathFor 'users.show'}}"> {{username}}</a>,
             {{/each}}
           </p>
           </div>
