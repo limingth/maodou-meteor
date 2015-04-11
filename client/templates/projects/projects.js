@@ -71,8 +71,6 @@ Template.projectsShow.helpers({
     return watchers;
   },
 
-
-
   numberOfMembers: function () {
 //    console.log ('members is :', this._id);
     var members = concernedPeople.findOne(this._id).teamMembers;
@@ -160,13 +158,11 @@ Template.projectsShow.events({
       return;
     }
 
-/*
     if (UI._globalHelpers.member_of_watchers(this))
     {
       alert('You have watched already');
       return;
     }
-*/
 
     this.watchers.push(Meteor.userId());
     modifies = {
@@ -191,5 +187,15 @@ Template.projectsShow.events({
    'click [data-action=groupEmail]': function (event, template) {
       console.log ("groupEmail!");
       console.log (this);
+
+      //  author_email = Meteor.users.findOne(this.author_Id).emails[0].address
+      _.each(this.watchers, function(wid) {
+        console.log (wid);
+        //console.log(this);
+        var u = Meteor.users.findOne(wid);
+        var email = u.emails[0].address;
+        console.log('sending email to ', email);
+        Meteor.call('sendEmail', email); 
+      });
   },
-});
+}); 
