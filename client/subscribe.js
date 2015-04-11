@@ -1,4 +1,7 @@
-Meteor.subscribe('goals');
+Meteor.subscribe('projects');
+
+
+//Meteor.subscribe('concernedPeople');
 
 Meteor.subscribe('goal');
 

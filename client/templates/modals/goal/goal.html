@@ -1,6 +1,6 @@
 <template name="newGoal">
   {{#ionModal focusFirstInput=true title="发布新项目"}}
-    {{> quickForm collection="Goals" id="goal-new-form" type="insert" omitFields="userId,voterIds,numberOfVotes,numberOfComments,createdAt,teamMembers" buttonContent="发布"}}
+    {{> quickForm collection="Goals" id="goal-new-form" type="insert" omitFields="teamMembers,teamMembersEmail,titles,message" buttonContent="发布"}}
   {{/ionModal}}
 </template>
 

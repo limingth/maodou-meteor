@@ -1,0 +1,92 @@
+<template name="projects">
+  {{#ionList}}
+    {{#each projects}}
+       {{#ionItem path="projects.show" conLeft=true iconRight=true avatar=true}}
+        <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png" />
+        <h2>{{name}}</h2>
+        <p>{{description}}</p>
+        <!-- <a href={{url}}>{{url}}</a> -->
+      {{/ionItem}}
+    {{/each}}
+  {{/ionList}}
+</template>
+
+<template name="newProject">
+  {{#ionModal focusFirstInput=true title="发布新项目"}}
+    {{> quickForm collection="Projects" id="project-new-form" type="insert" omitFields="watchers" buttonContent="发布"}}
+  {{/ionModal}}
+</template>
+
+<template name="groupEmail">
+  {{#ionModal focusFirstInput=true title="发送小组邮件"}}
+    {{> quickForm collection="Emails" id="group-email-form" type="normal" buttonContent="发送"}}
+  {{/ionModal}}
+</template>
+
+
+<template name="projectsShow">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton class="button" text=false}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title">项目详情</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#with project}}
+        <div class="list card">
+
+          <div class="item item-avatar">
+            <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png">
+            <h2>{{name}}</h2>
+            <p>{{description}}</p>
+            <p>目前本项目已有 {{watchers_count}} 人关注，<br>他们是
+            {{#each watchers}}
+              <a href="{{pathFor 'users.show'}}"> @{{username}}</a>,
+            {{/each}}
+          </p>
+          </div>
+          
+          <p> &nbsp; <a href="{{url}}" target="_blank"> {{url}} </a></p>
+
+          <div class="item item-body">
+            <h2>项目开发指导</h2>
+            
+            {{#each steps}}
+              <li class="item-desc"> {{this.description}} <br> </li>
+              <hr>
+              <img src="{{this.snapshot_url}}" width='300px' />
+              &nbsp;<br>&nbsp; 
+            {{/each}}
+            
+          </div>
+
+        <div class="item tabs tabs-secondary tabs-icon-left">
+        <!--
+            <a class="tab-item" href="#" data-ion-modal="groupEmail">
+              <i class="icon ion-email"></i>
+              写邮件
+            </a>
+        -->
+            <a class="tab-item" href="#" data-action="groupEmail">
+              <i class="icon ion-email"></i>
+              写邮件
+            </a>
+            <a class="tab-item" href="#" data-action="watch">
+              <i class="icon ion-eye"></i>
+              关注
+            </a>
+            <a class="tab-item" href="#" data-action="share">
+              <i class="icon ion-share"></i>
+              分享
+            </a>
+          </div>
+
+        </div>
+      {{/with }}    
+
+    {{/ionContent}}
+  {{/ionView}}
+</template>

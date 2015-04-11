@@ -23,10 +23,16 @@ Router.route('/users/:_id', {
   name: 'users.show'
 });
 
+Router.route('/projects/:_id', {
+  name: 'projects.show'
+});
+
 Router.map(function() {
   this.route('profile');
   this.route('welcome');
   this.route('settings');
   this.route('newGoal');
+  this.route('newProject');
+  this.route('groupEmail');
 });
 

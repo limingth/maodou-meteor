@@ -16,7 +16,7 @@
 
   {{#if currentUser}}
     {{#contentFor "headerButtonRight"}}
-      <button class="button button-clear pull-right" data-ion-modal="newGoal">
+      <button class="button button-clear pull-right" data-ion-modal="newProject">
         {{> ionIcon icon='ios-plus-empty'}}
       </button>
     {{/contentFor}}
@@ -36,7 +36,7 @@
             {{/each}}
           </p>
           <h5><li>最新项目发布</li></h5>
-          {{> goals}}
+          {{> projects}}
         </div>
       {{else}}
         {{> atForm}}

@@ -7,6 +7,29 @@ AutoForm.hooks({
     }
 });
 
+AutoForm.hooks({
+    'project-new-form': {
+        onSuccess: function (operation, result, template) {
+            IonModal.close();
+            Router.go('projects.show', {_id: result});
+        }
+    },
+      'group-email-form': {
+        onSubmit: function (doc) {
+            console.log("Send email");
+          // console.log(Projects.findOne(this._id).teamMembersEmail[0]);
+          //var members  = Projects.findOne(result).teamMembersEmail;
+          //console.log(members.length);
+            console.log(this);
+            console.log(doc);
+            //Meteor.call('sendEmail',doc);
+            //IonModal.close();
+            //console.log("Send email");
+            //Router.go('goals.show', {_id: result});
+        }
+    }
+});
+
 Template.registerHelper('memberOf', function(group) {
   return Meteor.userId() && _.find(group.teamMembers, function(member) {
     return member === Meteor.userId();
