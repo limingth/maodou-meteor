@@ -80,11 +80,11 @@ Projects.attachSchema(new SimpleSchema({
       minCount: 0,
       maxCount: 100
    },
-   "steps.$": {
+  "steps.$": {
       type: Object,
       optional: true
    },
-   "steps.$.description": {
+  "steps.$.description": {
       type: String,
       label: "Answer",
     autoform: {
@@ -92,7 +92,7 @@ Projects.attachSchema(new SimpleSchema({
       placeholder: '步骤描述'
     },
    },
-   "steps.$.snapshot_url": {
+  "steps.$.snapshot_url": {
       type: String,
       label: "Answer",
     autoform: {
@@ -100,7 +100,7 @@ Projects.attachSchema(new SimpleSchema({
       placeholder: '运行效果图'
     },
    },
-   watchers: {
+  watchers: {
     type: [String],
      autoValue: function () {
       if (this.isSet) {
@@ -111,9 +111,22 @@ Projects.attachSchema(new SimpleSchema({
       } else {
         this.unset();
       }
+    },
+  },
+  owner: {
+    type: String,
+     autoValue: function () {
+      if (this.isSet) {
+        return;
+      }
+      if (this.isInsert) {
+        return Meteor.userId();
+      } else {
+        this.unset();
+      }
     }
   },
-    
+
 }));
 
 Emails.attachSchema(  new SimpleSchema({

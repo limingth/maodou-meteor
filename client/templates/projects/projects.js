@@ -42,8 +42,6 @@ Template.registerHelper('ownerOf', function(group) {
   return Meteor.userId() === group.userId;
 });
 
-
-
 Template.projectsShow.helpers({
 
   hisname: function () {
@@ -76,10 +74,10 @@ Template.projectsShow.helpers({
     var members = concernedPeople.findOne(this._id).teamMembers;
     return members.length;
   },
-  getusername: function (id) {
-//    console.log ('user id is :', id);
-    var u = Meteor.users.findOne(id);
-    return u.username;
+  owner: function () {
+    console.log ('this is :', this);
+    var u = Meteor.users.findOne(this.owner);
+    return u;
   },
   isWatcher: function () {
 //    console.log(this);

@@ -51,10 +51,14 @@
           <div class="item item-avatar">
             <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png">
             <h2>{{name}}</h2>
-            <p>{{description}}</p>
+            <p>{{description}}, 创建者 
+            {{#with owner}}
+              <a href="{{pathFor 'users.show'}}">{{username}}</a> 
+            {{/with}}
+            </p>
             <p>目前本项目已有 {{watchers_count}} 人关注，<br>他们是
             {{#each watchers}}
-              <a href="{{pathFor 'users.show'}}"> @{{username}}</a>,
+              <a href="{{pathFor 'users.show'}}"> {{username}}</a>,
             {{/each}}
           </p>
           </div>
