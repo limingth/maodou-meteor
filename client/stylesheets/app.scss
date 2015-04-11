@@ -81,3 +81,23 @@ li.item-desc {
   color: black;
   padding: 0.1em;
 }
+.profile-main-img {
+  width: 100%;
+}
+.profile-email {
+  margin-left: 1em;
+  margin-top: 1em;
+  font-size: 1.3em;
+  color: rgb(142, 142, 145);
+}
+#WelcomeMain .project-person-amount {
+  width: 35px;
+  right: 22px;
+  top: 0px;
+  font-size: 18px;
+  opacity: 0.4;
+}
+#WelcomeMain .list a.item {
+  padding-top: 10px;
+  margin-bottom: -10px;
+}
