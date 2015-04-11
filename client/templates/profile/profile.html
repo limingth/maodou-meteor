@@ -25,7 +25,14 @@
             {{#each emails}}
               <p>Email: {{address}}</p>
             {{/each}}
-            
+                  
+            {{#ionList}}
+              已经关注的项目有：
+              {{#each watchedProjects}}
+                {{> _projectItem project=this path="projects.show"}}
+              {{/each}}
+            {{/ionList}}
+                  
           {{/with}}
         </div>
       {{else}}
