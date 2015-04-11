@@ -10,7 +10,12 @@ Template.welcome.helpers({
   },
   users: function () {
     //return Meteor.user().emails[0].address;
-    return Meteor.users.find().fetch();
+    var colors = ['#b6b6b4', '#7a7fb6', '#95d0de', '#938ea5', '#d6a7c9', '#c3d0c9'];
+    var users = Meteor.users.find().fetch();
+    _.each(users, function (item, i) {
+      item.usercolor = colors[i % 6];
+    });
+    return users;
   },
 });
 
