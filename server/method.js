@@ -21,8 +21,8 @@ Meteor.methods({
     Email.send({
       to: email,
       from: Meteor.user().emails[0].address,
-      subject: "Hi",
-      text: "I love this project!"
+      subject: "Hi, I love your project!",
+      text: "It's really awesome.  May I join you? \n\nThanks! \n\n  - from "+ Meteor.user().username,
       });
     
     //this.unblock();
