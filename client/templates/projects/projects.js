@@ -42,7 +42,7 @@ Template.registerHelper('ownerOf', function(group) {
   return Meteor.userId() === group.userId;
 });
 
-Template.registerHelper('get_avatar_url', function(project) {
+Template.registerHelper('get_project_avatar_url', function(project) {
   var u = Meteor.users.findOne(project.owner);
   return Avatar.getUrl(u) || "http://alaframboise.github.io/presentations/esrigithub/images/github.png";
   // '/maodou-logo.png';
@@ -98,7 +98,19 @@ Template.projectsShow.helpers({
       return false;
     else
       return true;
-  }
+  },
+  snapshot_is_img: function () {
+    //console.log('this is ', this);
+    var fullPath = this.snapshot_url;
+    var filename = fullPath.replace(/^.*[\\\/]/, '');
+    //console.log(filename);
+    var type = filename.split('.').pop();
+    //console.log(type);
+    if (type == "png" || type == "jpg" || type == "gif" || type == "jpeg" || type == "bmp") 
+      return true;
+    else
+      return false;
+  },
 });
 
 
@@ -191,7 +203,8 @@ Template.projectsShow.events({
   },
    'click [data-action=share]': function (event, template) {
     console.log ("share!");
-    var modifies;
+    
+    alert('you will share this project ' + this.name + ' to public');
   },
    'click [data-action=groupEmail]': function (event, template) {
       console.log ("groupEmail!");
@@ -206,5 +219,6 @@ Template.projectsShow.events({
         console.log('sending email to ', email);
         Meteor.call('sendEmail', email); 
       });
+      alert('Your application email is sent to this project watchers: ' + this.watchers.length);
   },
 }); 

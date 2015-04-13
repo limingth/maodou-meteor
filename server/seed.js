@@ -3,6 +3,7 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
 
   if (Projects.find({}).count() === 0) {
     Projects.remove({});
+    return;
     Projects.insert({
       name: "毛豆网移动版",
       description: "在线协作学习社区",

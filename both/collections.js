@@ -70,7 +70,7 @@ Projects.attachSchema(new SimpleSchema({
     label: "Answer",
     autoform: {
       'label-type': 'placeholder',
-      placeholder: '项目Github Repo地址'
+      placeholder: '项目Github Repo地址，如果没有可以放项目网站URL链接'
     },
     max: 200
   },
@@ -89,7 +89,7 @@ Projects.attachSchema(new SimpleSchema({
       label: "Answer",
     autoform: {
       'label-type': 'placeholder',
-      placeholder: '步骤描述'
+      placeholder: '学习知识点描述'
     },
    },
   "steps.$.snapshot_url": {
@@ -97,7 +97,7 @@ Projects.attachSchema(new SimpleSchema({
       label: "Answer",
     autoform: {
       'label-type': 'placeholder',
-      placeholder: '运行效果图'
+      placeholder: '填写参考资料链接，如链接结尾是jpg/png，则此链接会显示为图片'
     },
    },
   watchers: {
