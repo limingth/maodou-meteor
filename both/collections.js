@@ -25,7 +25,7 @@ Goals.helpers({
 */
 });
 
-Projects.before.insert(function (userId, doc) {
+Projects.before.insert(function (_id, doc) {
   doc.createdAt = new Date();
 });
 
@@ -102,7 +102,7 @@ Projects.attachSchema(new SimpleSchema({
    },
   watchers: {
     type: [String],
-     autoValue: function () {
+    autoValue: function () {
       if (this.isSet) {
         return;
       }
@@ -115,7 +115,8 @@ Projects.attachSchema(new SimpleSchema({
   },
   owner: {
     type: String,
-     autoValue: function () {
+    optional: false,
+    autoValue: function () {
       if (this.isSet) {
         return;
       }

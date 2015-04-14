@@ -73,6 +73,10 @@
             {{#each watchedProjects}}
               {{> _projectItem project=this path="projects.show"}}
             {{/each}}
+            <!-- 属于我的项目有：-->
+            {{#each ownedProjects}}
+              {{> _projectItem project=this path="projects.show"}}
+            {{/each}}
           {{/ionList}}
         {{/with}}
       </div>

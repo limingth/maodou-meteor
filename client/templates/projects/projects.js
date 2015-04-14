@@ -174,12 +174,6 @@ Template.projectsShow.events({
       return;
     }
 
-    if (UI._globalHelpers.member_of_watchers(this))
-    {
-      alert('You have watched already');
-      return;
-    }
-
     this.watchers.push(Meteor.userId());
     modifies = {
       watchers: this.watchers
