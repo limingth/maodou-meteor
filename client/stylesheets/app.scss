@@ -106,3 +106,13 @@ li.item-desc {
 #at-pwd-form [for="at-field-username_and_email"] {
   width: 160px;
 }
+#UserProfile .unwatch-item,
+#UserProfile .del-item {
+  font-size: 12px;
+}
+#UserProfile .unwatch-item {
+  color: green;
+}
+#UserProfile .del-item {
+  color: red;
+}
