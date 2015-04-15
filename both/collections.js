@@ -29,6 +29,13 @@ Projects.before.insert(function (userId, doc) {
   doc.createdAt = new Date();
 });
 
+Projects.after.insert(function (userId, doc) {
+  Meteor.users.update({_id: userId}, {$set: {
+    "watchedProjectIds": ['' + this._id],
+    "ownedProjectIds": ['' + this._id]
+  }});
+});
+
 Projects.helpers({
   datePosted: function () {
     // http://momentjs.com/
@@ -102,7 +109,7 @@ Projects.attachSchema(new SimpleSchema({
    },
   watchers: {
     type: [String],
-     autoValue: function () {
+    autoValue: function () {
       if (this.isSet) {
         return;
       }
@@ -115,7 +122,8 @@ Projects.attachSchema(new SimpleSchema({
   },
   owner: {
     type: String,
-     autoValue: function () {
+    optional: false,
+    autoValue: function () {
       if (this.isSet) {
         return;
       }

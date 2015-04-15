@@ -113,6 +113,21 @@ Template.projectsShow.helpers({
   },
 });
 
+Template._projectWatchItem.events({
+ 'click .unwatch-item': function (event, template) {
+    event.preventDefault();
+    Meteor.call('Projects.unwatch', this._id);
+  }
+});
+
+Template._projectOwnerItem.events({
+ 'click .del-item': function (event, template) {
+    event.preventDefault();
+    if (confirm("删除后不可恢复，确定？")) {
+      Projects.remove(this._id);
+    }
+  }
+});
 
 Template.projectsShow.events({
  'click [data-action=email]': function (event, template) {
@@ -171,12 +186,6 @@ Template.projectsShow.events({
       //alert('You should log in before join this team');
      // this.close();
       Router.go('profile');
-      return;
-    }
-
-    if (UI._globalHelpers.member_of_watchers(this))
-    {
-      alert('You have watched already');
       return;
     }
 
