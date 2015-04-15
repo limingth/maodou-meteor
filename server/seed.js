@@ -70,10 +70,12 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
   var checkAndUpdate = function (myCollections, propsMap, callback) {
     myCollections.find({}).fetch().forEach(function (value, index) {
       _.each(propsMap, function (initValue, prop) {
-        if (!value[prop]) {
+        var id = value._id;
+        if (!value[prop] || typeof value[prop] != typeof initValue) {
           console.log("Miss the prop --> " + prop + ', add with default value --> ' + initValue);
           value[prop] = initValue;
-          callback && callback({_id: value._id}, value);
+          delete value._id;
+          callback && callback({_id: id}, value);
         }
       });
     });
@@ -90,24 +92,32 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
      具体更新逻辑根据字段的业务逻辑的不同而不同 */
 
   // 双向同步users的ownedProjectIds和project的owner,
-  Meteor.users.find({}).fetch().forEach(function (value, index) {
-    value.ownedProjectIds && value.ownedProjectIds.forEach(function (id, i) {
+  Meteor.users.find({}).fetch().forEach(function (user, index) {
+    if (!_.isArray(user.ownedProjectIds)) {
+      user.ownedProjectIds = [];
+    }
+    user.ownedProjectIds.forEach(function (id, i) {
       Projects.find({_id: id}).fetch().forEach(function (project, j) {
-        if (project.owner != value._id) {
+        if (project.owner != user._id) {
           Projects.update(project._id, {
-            $set: {owner: value._id}
+            $set: {owner: user._id}
           }, function(error) {
             if (error) {
               console.log(error.reason);
             }
           });
+          console.log('Updating project owner --> ');
+          console.log(user._id);
         }
       });
     });
   });
   Projects.find({}).fetch().forEach(function (value, index) {
     Meteor.users.find({_id: value.owner}).fetch().forEach(function (user, i) {
-      if (user.ownedProjectIds && !user.ownedProjectIds.some(function (id, j) {
+      if (!_.isArray(user.ownedProjectIds)) {
+        user.ownedProjectIds = [];
+      }
+      if (!user.ownedProjectIds.some(function (id, j) {
         return id == value._id;
       })) {
         user.ownedProjectIds.push(value._id);
@@ -120,18 +130,26 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
 
   // 双向同步users的watchedProjectIds和project的watchers
   Meteor.users.find({}).fetch().forEach(function (user, index) {
-    user.watchedProjectIds && user.watchedProjectIds.forEach(function (id, i) {
+    if (!_.isArray(user.watchedProjectIds)) {
+      user.watchedProjectIds = [];
+    }
+    user.watchedProjectIds.forEach(function (id, i) {
       Projects.find({_id: id}).fetch().forEach(function (project, j) {
         if (!_.contains(project.watchers, user._id)) {
           project.watchers.push(user._id);
           Projects.update(project._id, {$set: {watchers: project.watchers}}, function(error) {
             error && console.log("Error while updating project, reason: " + error.reason);
           });
+          console.log('Updating project watchers --> ');
+          console.log(project.watchers);
         }
       });
     });
   });
   Projects.find({}).fetch().forEach(function (project, index) {
+    if (!_.isArray(project.watchers)) {
+      project.watchers = [];
+    }
     project.watchers.forEach(function (uId, uIndex) {
       Meteor.users.find({_id: uId}).fetch().forEach(function (user, i) {
         if (!_.contains(user.watchedProjectIds, project._id)) {
@@ -139,6 +157,8 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
           Meteor.users.update({_id: uId}, {$set: {watchedProjectIds: user.watchedProjectIds}}, function (err) {
             err && console.log("Error while updating user, reason: " + err.reason);
           });
+          console.log('Updating user watchedProjectIds --> ');
+          console.log(user.watchedProjectIds);
         }
       });
     });

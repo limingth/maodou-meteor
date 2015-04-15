@@ -18,9 +18,9 @@ Meteor.users.helpers({
     return Meteor.user()._id == this._id;
   },
   watchedProjects: function () {
-    return Projects.find({_id: {$in: this.watchedProjectIds}});
+    return Projects.find({_id: {$in: this.watchedProjectIds || []}});
   },
   ownedProjects: function () {
-    return Projects.find({_id: {$in: this.ownedProjectIds}})
+    return Projects.find({_id: {$in: this.ownedProjectIds || []}})
   },
 });
