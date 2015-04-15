@@ -25,8 +25,15 @@ Goals.helpers({
 */
 });
 
-Projects.before.insert(function (_id, doc) {
+Projects.before.insert(function (userId, doc) {
   doc.createdAt = new Date();
+});
+
+Projects.after.insert(function (userId, doc) {
+  Meteor.users.update({_id: userId}, {$set: {
+    "watchedProjectIds": ['' + this._id],
+    "ownedProjectIds": ['' + this._id]
+  }});
 });
 
 Projects.helpers({

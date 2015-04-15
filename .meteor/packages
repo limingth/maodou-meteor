@@ -12,7 +12,6 @@ meteoric:ionic-sass
 meteoric:ionicons-sass
 meteoric:ionic
 meteoric:autoform-ionic
-useraccounts:ionic
 coffeescript
 reywood:publish-composite
 chrismbeckett:toastr
@@ -21,3 +20,4 @@ bengott:avatar
 meteoric:camera
 dburles:collection-helpers
 email
+useraccounts:ionic

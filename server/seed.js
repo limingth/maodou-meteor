@@ -86,7 +86,64 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
     Projects.simpleSchema().clean(value);
   });
 
-  // 双向同步users的ownedProjectIds和project的owner
+  /* 如果升级数据库的过程中，新的字段和旧的字段存在关联，则需要进行双向的更新，更新代码添加在此处，
+     具体更新逻辑根据字段的业务逻辑的不同而不同 */
+
+  // 双向同步users的ownedProjectIds和project的owner,
+  Meteor.users.find({}).fetch().forEach(function (value, index) {
+    value.ownedProjectIds && value.ownedProjectIds.forEach(function (id, i) {
+      Projects.find({_id: id}).fetch().forEach(function (project, j) {
+        if (project.owner != value._id) {
+          Projects.update(project._id, {
+            $set: {owner: value._id}
+          }, function(error) {
+            if (error) {
+              console.log(error.reason);
+            }
+          });
+        }
+      });
+    });
+  });
+  Projects.find({}).fetch().forEach(function (value, index) {
+    Meteor.users.find({_id: value.owner}).fetch().forEach(function (user, i) {
+      if (user.ownedProjectIds && !user.ownedProjectIds.some(function (id, j) {
+        return id == value._id;
+      })) {
+        user.ownedProjectIds.push(value._id);
+        Meteor.users.update({_id: value.owner}, {$set: {ownedProjectIds: user.ownedProjectIds}});
+        console.log('Updating user ownedProjectIds --> ');
+        console.log(user.ownedProjectIds)
+      }
+    });
+  });
+
+  // 双向同步users的watchedProjectIds和project的watchers
+  Meteor.users.find({}).fetch().forEach(function (user, index) {
+    user.watchedProjectIds && user.watchedProjectIds.forEach(function (id, i) {
+      Projects.find({_id: id}).fetch().forEach(function (project, j) {
+        if (!_.contains(project.watchers, user._id)) {
+          project.watchers.push(user._id);
+          Projects.update(project._id, {$set: {watchers: project.watchers}}, function(error) {
+            error && console.log("Error while updating project, reason: " + error.reason);
+          });
+        }
+      });
+    });
+  });
+  Projects.find({}).fetch().forEach(function (project, index) {
+    project.watchers.forEach(function (uId, uIndex) {
+      Meteor.users.find({_id: uId}).fetch().forEach(function (user, i) {
+        if (!_.contains(user.watchedProjectIds, project._id)) {
+          user.watchedProjectIds.push(project._id);
+          Meteor.users.update({_id: uId}, {$set: {watchedProjectIds: user.watchedProjectIds}}, function (err) {
+            err && console.log("Error while updating user, reason: " + err.reason);
+          });
+        }
+      });
+    });
+  });
+  /*
   Meteor.users.find({}).fetch().forEach(function (value, index) {
     value.ownedProjectIds && value.ownedProjectIds.forEach(function (id, i) {
       Projects.find({_id: id}).fetch().forEach(function (project, j) {
@@ -102,17 +159,5 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
       })
     })
   });
-
-  Projects.find({}).fetch().forEach(function (value, index) {
-    Meteor.users.find({_id: value.owner}).fetch().forEach(function (user, i) {
-      if (user.ownedProjectIds && !user.ownedProjectIds.some(function (id, j) {
-        return id == value._id;
-      })) {
-        user.ownedProjectIds.push(value._id);
-        Meteor.users.update({_id: value.owner}, {$set: {ownedProjectIds: user.ownedProjectIds}});
-        console.log('Updating user ownedProjectIds --> ');
-        console.log(user.ownedProjectIds)
-      }
-    })
-  });
+  */
 });
