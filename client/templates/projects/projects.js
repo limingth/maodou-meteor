@@ -113,7 +113,7 @@ Template.projectsShow.helpers({
   },
 });
 
-Template._projectItem.events({
+Template._projectWatchItem.events({
  'click .unwatch-item': function (event, template) {
     event.preventDefault();
     Meteor.call('Projects.unwatch', this._id);

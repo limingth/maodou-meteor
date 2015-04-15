@@ -14,6 +14,9 @@ Template.registerHelper('get_avatar_url', function(usr) {
 });
 
 Meteor.users.helpers({
+  isPageOwner: function () {
+    return Meteor.user()._id == this._id;
+  },
   watchedProjects: function () {
     return Projects.find({_id: {$in: this.watchedProjectIds}});
   },

@@ -32,6 +32,17 @@
       <p>
         {{description}}
       </p>
+    {{/ionItem}}
+  {{/with}}
+</template>
+
+<template name="_projectWatchItem">
+  {{#with project}}
+    {{#ionItem path=../path iconRight=true}}
+      <h2>{{name}}</h2>
+      <p>
+        {{description}}
+      </p>
       <i class="icon ion-eye-disabled unwatch-item">取消关注</i>
     {{/ionItem}}
   {{/with}}

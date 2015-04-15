@@ -26,16 +26,29 @@
               <p class="profile-email">Email: {{address}}</p>
             {{/each}}
                   
-            {{#ionList}}
-              <!-- 已经关注的项目有：-->
-              {{#each watchedProjects}}
-                {{> _projectItem project=this path="projects.show"}}
-              {{/each}}
-              <!-- 属于我的项目有：-->
-              {{#each ownedProjects}}
-                {{> _projectOwnerItem project=this path="projects.show"}}
-              {{/each}}
-            {{/ionList}}
+            {{#if isPageOwner}}
+              {{#ionList}}
+                <!-- 已经关注的项目有：-->
+                {{#each watchedProjects}}
+                  {{> _projectWatchItem project=this path="projects.show"}}
+                {{/each}}
+                <!-- 属于我的项目有：-->
+                {{#each ownedProjects}}
+                  {{> _projectOwnerItem project=this path="projects.show"}}
+                {{/each}}
+              {{/ionList}}
+            {{else}}
+              {{#ionList}}
+                <!-- 已经关注的项目有：-->
+                {{#each watchedProjects}}
+                  {{> _projectItem project=this path="projects.show"}}
+                {{/each}}
+                <!-- 属于我的项目有：-->
+                {{#each ownedProjects}}
+                  {{> _projectItem project=this path="projects.show"}}
+                {{/each}}
+              {{/ionList}}
+            {{/if}}
                   
           {{/with}}
         </div>
@@ -72,16 +85,30 @@
             {{/each}}
             -->
           
-          {{#ionList}}
-            <!-- 已经关注的项目有：-->
-            {{#each watchedProjects}}
-              {{> _projectItem project=this path="projects.show"}}
-            {{/each}}
-            <!-- 属于我的项目有：-->
-            {{#each ownedProjects}}
-              {{> _projectOwnerItem project=this path="projects.show"}}
-            {{/each}}
-          {{/ionList}}
+          {{#if isPageOwner}}
+              {{#ionList}}
+                <!-- 已经关注的项目有：-->
+                {{#each watchedProjects}}
+                  {{> _projectWatchItem project=this path="projects.show"}}
+                {{/each}}
+                <!-- 属于我的项目有：-->
+                {{#each ownedProjects}}
+                  {{> _projectOwnerItem project=this path="projects.show"}}
+                {{/each}}
+              {{/ionList}}
+            {{else}}
+              {{#ionList}}
+                <!-- 已经关注的项目有：-->
+                {{#each watchedProjects}}
+                  {{> _projectItem project=this path="projects.show"}}
+                {{/each}}
+                <!-- 属于我的项目有：-->
+                {{#each ownedProjects}}
+                  {{> _projectItem project=this path="projects.show"}}
+                {{/each}}
+              {{/ionList}}
+            {{/if}}
+            
         {{/with}}
       </div>
     {{/ionContent}}
