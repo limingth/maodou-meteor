@@ -30,10 +30,13 @@ Projects.before.insert(function (userId, doc) {
 });
 
 Projects.after.insert(function (userId, doc) {
-  Meteor.users.update({_id: userId}, {$set: {
-    "watchedProjectIds": ['' + this._id],
-    "ownedProjectIds": ['' + this._id]
-  }});
+  var projectId = this._id;
+  Meteor.users.find({_id: userId}).fetch().forEach(function (user, i) {
+    user.watchedProjectIds.push(projectId);
+    user.ownedProjectIds.push(projectId);
+    delete user._id;
+    Meteor.users.update({_id: userId}, {$set: user});
+  })
 });
 
 Projects.helpers({
