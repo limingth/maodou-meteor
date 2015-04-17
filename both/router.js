@@ -15,10 +15,6 @@ Router.route('/', function () {
   this.render('welcome');
 });
 
-Router.route('/goals/:_id', {
-  name: 'goals.show'
-});
-
 Router.route('/users/:_id', {
   name: 'users.show'
 });
@@ -31,7 +27,6 @@ Router.map(function() {
   this.route('profile');
   this.route('welcome');
   this.route('settings');
-  this.route('newGoal');
   this.route('newProject');
   this.route('groupEmail');
 });

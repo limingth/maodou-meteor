@@ -19,6 +19,14 @@
   {{/ionModal}}
 </template>
 
+<template name="editProject">
+  {{#ionModal focusFirstInput=true title="编辑项目"}}
+    <!-- 此处的doc无法取到project，用hook的方式修改doc为当前编辑的project达成。
+     后续可以为editProject增加一个route，在router中的data函数里指定project作为context，更为标准的做法 -->
+    {{> quickForm collection="Projects" id="project-edit-form" doc=this type="update" omitFields="watchers,owner" buttonContent="保存"}}
+  {{/ionModal}}
+</template>
+
 <template name="groupEmail">
   {{#ionModal focusFirstInput=true title="发送小组邮件"}}
     {{> quickForm collection="Emails" id="group-email-form" type="normal" buttonContent="发送"}}
@@ -64,6 +72,16 @@
   {{#contentFor "headerButtonLeft"}}
     {{>ionNavBackButton class="button" text=false}}
   {{/contentFor}}
+
+  {{#with project}}
+    {{#if isTeamOwner}}
+      {{#contentFor "headerButtonRight"}}
+        <button class="button button-clear pull-right" data-ion-modal="editProject" id="EditProjectBtn">
+          {{> ionIcon icon='edit'}}
+        </button>
+      {{/contentFor}}
+    {{/if}}
+  {{/with}}
 
   {{#contentFor "headerTitle"}}
     <h1 class="title">项目详情</h1>

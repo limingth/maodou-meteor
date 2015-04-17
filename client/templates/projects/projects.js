@@ -1,17 +1,22 @@
-/*AutoForm.hooks({
-   
-     'group-email-form': {
-        onSubmit: function (doc) {
-            //console.log("Send email");
-          // console.log(Projects.findOne(this._id).teamMembersEmail[0]);
-          var members  = Projects.findOne(this._id).teamMembersEmail;
-          //console.log(members.length);
-            Meteor.call('sendEmail',doc,members.teamMembersEmail);
-            //IonModal.close();
-           // Router.go('goals.show', {_id: result});
-        }
-    }
-});*/
+AutoForm.addHooks("project-edit-form", {
+  docToForm: function(doc) {
+    return Projects.findOne(Session.get('current-project'));
+  },
+  onSuccess: function(formType, result) {
+    var projectId = this.docId;
+    IonModal.close();
+  }
+});
+
+AutoForm.addHooks("project-new-form", {
+  onSuccess: function(formType, result) {
+    console.log('Success submit!');
+    console.log(result);
+    var projectId = this.docId;
+    IonModal.close();
+    projectId && Router.go('/projects/' + projectId);
+  }
+});
 
 Template.projects.helpers({
 
@@ -19,50 +24,58 @@ Template.projects.helpers({
     return Projects.find({}, {limit:100, sort:{}});
   },
   watchers_count:function(){
-    return Projects.findOne(this._id).watchers.length;
+    var p = Projects.findOne(this._id);
+    if (p && p.watchers) {
+      return p.watchers.length;
+    };
+    return 0;
   }
 });
 
+// 欢迎横条点击后展示当前用户情况功能的事件绑定
 Template.projects.rendered = function () {
-  /*setTimeout(function () {
-    $('.welcome-hint').hide(1000);
-  }, 2000);*/
   $('.welcome-header').on('click', function () {
     $('.welcome-brief').toggle(500);
   })
 }
 
-Template.registerHelper('member_of_watchers', function(group) {
-  return Meteor.userId() && _.find(group.watchers, function(member) {
-    return member === Meteor.userId();
+// 一个project展示的时候，使用session存储其ID，方便从当前页面出发，对project做各种操作
+Template.projectsShow.rendered = function () {
+  this.data && this.data.project && Session.set('current-project', this.data.project._id)
+}
+
+Template.editProject.helpers({
+  project: function () {
+    var pId = Session.get('current-project');
+    return Projects.findOne(pId);
+  }
+});
+
+Template.registerHelper('member_of_watchers', function(project) {
+  var uid = Meteor.userId();
+  return uid && _.find(project.watchers, function(member) {
+    return member === uid;
   });
 });
 
-Template.registerHelper('ownerOf', function(group) {
-  return Meteor.userId() === group.userId;
+Template.registerHelper('ownerOf', function(project) {
+  return Meteor.userId() === project.owner;
 });
 
 Template.registerHelper('get_project_avatar_url', function(project) {
   var u = Meteor.users.findOne(project.owner);
   return Avatar.getUrl(u) || "http://alaframboise.github.io/presentations/esrigithub/images/github.png";
-  // '/maodou-logo.png';
 });
 
 Template.projectsShow.helpers({
 
   hisname: function () {
-    //return Meteor.user().emails[0].address;
     return Meteor.user().username;
   },
   watchers_count: function () {
-    //return Meteor.user().emails[0].address;
     return this.watchers.length;
   },
   watchers: function () {
-    //return Meteor.user().emails[0].address;
-
-    //Meteor.users.find({}, {limit:100, sort:{}});
-    //_.each(this.watchers)
     var watchers = [];
 
     _.each(this.watchers, function(wid) {
@@ -71,12 +84,10 @@ Template.projectsShow.helpers({
       watchers.push(u);
     });
 
-    console.log (watchers);
     return watchers;
   },
 
   numberOfMembers: function () {
-//    console.log ('members is :', this._id);
     var members = concernedPeople.findOne(this._id).teamMembers;
     return members.length;
   },
@@ -86,26 +97,24 @@ Template.projectsShow.helpers({
     return u;
   },
   isWatcher: function () {
-//    console.log(this);
     if (!UI._globalHelpers.member_of_watchers(this))
       return false;
     else
       return true;
   },
   isTeamOwner: function () {
-//    console.log(this);
+    console.log('Is team owner? ')
+    console.log(this);
     if (!UI._globalHelpers.ownerOf(this))
       return false;
     else
       return true;
   },
   snapshot_is_img: function () {
-    //console.log('this is ', this);
     var fullPath = this.snapshot_url;
     var filename = fullPath.replace(/^.*[\\\/]/, '');
-    //console.log(filename);
     var type = filename.split('.').pop();
-    //console.log(type);
+
     if (type == "png" || type == "jpg" || type == "gif" || type == "jpeg" || type == "bmp") 
       return true;
     else
@@ -131,13 +140,11 @@ Template._projectOwnerItem.events({
 
 Template.projectsShow.events({
  'click [data-action=email]': function (event, template) {
-  console.log ("Join team clicked!");
+    console.log ("Join team clicked!");
     var modifies;
 
     if (Meteor.user() == null)
     {
-      //alert('You should log in before join this team');
-     // this.close();
       Router.go('profile');
       return;
     }
@@ -183,8 +190,6 @@ Template.projectsShow.events({
 
     if (Meteor.user() == null)
     {
-      //alert('You should log in before join this team');
-     // this.close();
       Router.go('profile');
       return;
     }
@@ -202,27 +207,22 @@ Template.projectsShow.events({
       }
     });
 
-    //Meteor.user().watchedProjects.push(this._id);
     Meteor.call('Projects.watch', this._id);
   },
  'click [data-action=unwatch]': function (event, template) {
     console.log ("unWatch buttion clicked!");
-    //Meteor.user().watchedProjects.push(this._id);
     Meteor.call('Projects.unwatch', this._id);
   },
    'click [data-action=share]': function (event, template) {
     console.log ("share!");
-    
     alert('you will share this project ' + this.name + ' to public');
   },
    'click [data-action=groupEmail]': function (event, template) {
       console.log ("groupEmail!");
       console.log (this);
 
-      //  author_email = Meteor.users.findOne(this.author_Id).emails[0].address
       _.each(this.watchers, function(wid) {
         console.log (wid);
-        //console.log(this);
         var u = Meteor.users.findOne(wid);
         var email = u.emails[0].address;
         console.log('sending email to ', email);
