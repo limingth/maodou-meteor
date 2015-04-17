@@ -1,29 +1,7 @@
-Goals = new Mongo.Collection('goals');
-
 Projects = new Mongo.Collection('projects');
 
 //ConcernedPeople = new Mongo.Collection('concernedPeople');
 Emails = new Mongo.Collection('emails');
-
-
-Goals.before.insert(function (userId, doc) {
-  doc.createdAt = new Date();
-});
-
-Goals.helpers({
-  datePosted: function () {
-    // http://momentjs.com/
-    return moment(this.createdAt).format('l');
-  },
-  author: function () {
-    return Meteor.users.findOne({_id: this.userId});
-  },
-/*
-  voters: function () {
-    return Meteor.users.find({_id: {$in: this.voterIds}});
-  }
-*/
-});
 
 Projects.before.insert(function (userId, doc) {
   doc.createdAt = new Date();
@@ -55,7 +33,6 @@ Projects.helpers({
 });
 
 // refer to https://developer.github.com/v3/repos/
-
 Projects.attachSchema(new SimpleSchema({
   name: {
     type: String,
@@ -88,7 +65,8 @@ Projects.attachSchema(new SimpleSchema({
       type: Array,
       optional: true,
       minCount: 0,
-      maxCount: 100
+      maxCount: 100,
+      label: "步骤"
    },
   "steps.$": {
       type: Object,

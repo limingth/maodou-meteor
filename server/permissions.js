@@ -1,23 +1,22 @@
-Goals.allow({
-  'insert': function(userId, doc) {
-    return userId;
-  },
-  'update': function(userId, doc, fields, modifier) {
-    return userId === doc.userId;
-  },
-  'remove': function(userId, doc) {
+Projects.allow({
+  'insert': function(userId, project) {
     return true;
+  },
+  'update': function(userId, project, fields, modifier) {
+    return userId === project.owner;
+  },
+  'remove': function(userId, project) {
+    return userId == project.owner;
   }
 });
-
-Projects.allow({
-  'insert': function(userId, doc) {
-    return ownerId;
-  },
-  'update': function(userId, doc, fields, modifier) {
-    return ownerId === doc.userId;
-  },
-  'remove': function(userId, doc) {
+Meteor.users.allow({
+  'insert': function(userId, user) {
     return true;
+  },
+  'update': function(userId, user) {
+    return userId === user._id;
+  },
+  'remove': function(userId, user) {
+    return false;
   }
 });

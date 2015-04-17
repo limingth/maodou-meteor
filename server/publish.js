@@ -57,7 +57,6 @@ Meteor.publishComposite('user', function(_id) {
     children: [
       {
         find: function(user) {
-          return Goals.find({userId: _id});
         }
       }
     ]
