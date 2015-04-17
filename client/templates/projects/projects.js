@@ -14,7 +14,7 @@ AutoForm.addHooks("project-new-form", {
     console.log(result);
     var projectId = this.docId;
     IonModal.close();
-    projectId && Router.go('/projects/' + projectId);
+    projectId && Router.go('projects.show', {_id: projectId});
   }
 });
 
@@ -23,13 +23,36 @@ Template.projects.helpers({
   projects: function () {
     return Projects.find({}, {limit:100, sort:{}});
   },
-  watchers_count:function(){
+  watchers_count: function() {
     var p = Projects.findOne(this._id);
     if (p && p.watchers) {
       return p.watchers.length;
     };
     return 0;
+  },
+  uId: function() {
+    var u;
+    var p = Projects.findOne(this._id);
+    if (p) {
+      u = Meteor.users.findOne(p.owner);
+    }
+    if (u) {
+      return u._id;
+    };
+    return '';
   }
+});
+
+// 项目列表中点击头像直接进入到个人信息列表
+Template.projects.events({
+ 'click .project-uicon': function (event, template) {
+    event.preventDefault();
+    var id = $(event.target).attr('data-id');
+    var u = Meteor.users.findOne(id);
+    if (u) {
+      Router.go('users.show', {_id: id});
+    }
+ }
 });
 
 // 欢迎横条点击后展示当前用户情况功能的事件绑定

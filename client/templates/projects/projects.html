@@ -3,7 +3,7 @@
     {{#each projects}}
        {{#ionItem path="projects.show" conLeft=true iconRight=true avatar=true}}
         <!-- <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png" /> -->
-        <img src="{{get_project_avatar_url this}}">
+        <img class="project-uicon" src="{{get_project_avatar_url this}}" data-id="{{uId}}">
         <i class="icon ion-person-stalker project-person-amount">{{watchers_count}}</i>
         <h2>{{name}}</h2>
         <p>{{description}}</p>
@@ -33,13 +33,26 @@
   {{/ionModal}}
 </template>
 
-<template name="_projectItem">
+<template name="_projectPlainWatchItem">
   {{#with project}}
     {{#ionItem path=../path iconRight=true}}
       <h2>{{name}}</h2>
       <p>
         {{description}}
       </p>
+      <i class="icon ion-eye plain-watch-item">关注者</i>
+    {{/ionItem}}
+  {{/with}}
+</template>
+
+<template name="_projectPlainOwnerItem">
+  {{#with project}}
+    {{#ionItem path=../path iconRight=true}}
+      <h2>{{name}}</h2>
+      <p>
+        {{description}}
+      </p>
+      <i class="icon ion-person plain-owner-item">创建者</i>
     {{/ionItem}}
   {{/with}}
 </template>
@@ -90,19 +103,16 @@
   {{#ionView}}
     {{#ionContent}}
       {{#with project}}
-        <div class="list card">
+        <div class="list card" id="ProjectDetails">
 
           <div class="item item-avatar">
-            <img src="http://alaframboise.github.io/presentations/esrigithub/images/github.png">
-            <h2>{{name}}, 创建者 
-              {{#with owner}}
-                <a href="{{pathFor 'users.show'}}">{{username}}</a> 
-              {{/with}}
-            </h2>
-            <p>
-              {{description}}
-            </p>
-            <p>目前本项目已有 {{watchers_count}} 人关注，<br>他们是
+            <img src="{{get_project_avatar_url this}}">
+            {{#with owner}}
+              <div class="project-owner"><a href="{{pathFor 'users.show'}}">{{username}}</a></div>
+            {{/with}}
+            <h2>{{name}}</h2>
+            <p>{{description}}</p>
+            <p>关注者<b>{{watchers_count}}</b>人：
             {{#each watchers}}
               <a href="{{pathFor 'users.show'}}"> {{username}}</a>,
             {{/each}}
