@@ -9,6 +9,14 @@ Projects.allow({
     return userId == project.owner;
   }
 });
+Emails.allow({
+  'insert': function(userId, email) {
+    return userId === email.owner;
+  },
+  'update': function (userId, email, fields, modifier) {
+    return userId === email.owner;
+  }
+});
 Meteor.users.allow({
   'insert': function(userId, user) {
     return true;

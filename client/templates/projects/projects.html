@@ -28,8 +28,8 @@
 </template>
 
 <template name="groupEmail">
-  {{#ionModal focusFirstInput=true title="发送小组邮件"}}
-    {{> quickForm collection="Emails" id="group-email-form" type="normal" buttonContent="发送"}}
+  {{#ionModal focusFirstInput=true title="发邮件申请加入"}}
+    {{> quickForm collection="Emails" id="group-email-form" type="insert" buttonContent="发送" omitFields="owner,receiver"}}
   {{/ionModal}}
 </template>
 
@@ -124,13 +124,7 @@
           </div>
 
           <div class="item tabs tabs-secondary tabs-icon-left">
-          <!--
               <a class="tab-item" href="#" data-ion-modal="groupEmail">
-                <i class="icon ion-email"></i>
-                写邮件
-              </a>
-          -->
-              <a class="tab-item" href="#" data-action="groupEmail">
                 <i class="icon ion-email"></i>
                 申请加入
               </a>

@@ -18,6 +18,26 @@ AutoForm.addHooks("project-new-form", {
   }
 });
 
+AutoForm.addHooks("group-email-form", {
+  formToDoc: function(doc) { // 补上receiver的id
+    doc.receiver = Projects.findOne(Session.get('current-project')).owner;
+    return doc;
+  },
+  onSuccess: function(formType, result) {
+    var email = Emails.findOne(result);
+    var receiver = Meteor.users.findOne(email.receiver);
+    var address = receiver.emails[0].address;
+    var emailObj = {
+      to: address,
+      from: Meteor.user().emails[0].address,
+      subject: email.titles,
+      text: email.message
+    }
+    Meteor.call('sendEmail', emailObj); 
+    IonModal.close();
+  }
+});
+
 Template.projects.helpers({
 
   projects: function () {
@@ -184,7 +204,7 @@ Template.projectsShow.events({
       teamMembers: this.teamMembers
     };
 
-   Projects.update(this._id, {
+    Projects.update(this._id, {
       $set: modifies
     }, function(error) {
       if (error) {
@@ -192,13 +212,13 @@ Template.projectsShow.events({
       }
     });
 
-   this.teamMembersEmail.push(Meteor.user().emails[0].address);
+    this.teamMembersEmail.push(Meteor.user().emails[0].address);
 
     modifies = {
-     teamMembersEmail: this.teamMembersEmail
+      teamMembersEmail: this.teamMembersEmail
     };
 
-   Projects.update(this._id, {
+    Projects.update(this._id, {
       $set: modifies
     }, function(error) {
       if (error) {
@@ -239,18 +259,5 @@ Template.projectsShow.events({
    'click [data-action=share]': function (event, template) {
     console.log ("share!");
     alert('you will share this project ' + this.name + ' to public');
-  },
-   'click [data-action=groupEmail]': function (event, template) {
-      console.log ("groupEmail!");
-      console.log (this);
-
-      _.each(this.watchers, function(wid) {
-        console.log (wid);
-        var u = Meteor.users.findOne(wid);
-        var email = u.emails[0].address;
-        console.log('sending email to ', email);
-        Meteor.call('sendEmail', email); 
-      });
-      alert('Your application email is sent to this project watchers: ' + this.watchers.length);
-  },
+  }
 }); 
