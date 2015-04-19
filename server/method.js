@@ -5,27 +5,15 @@ Meteor.methods({
       return;
     }
 
-    console.log ('delete user id', _id);
     var user = Meteor.users.findOne(_id);
 
     console.log ('delete username is ', user.username);
     Meteor.users.remove(_id);
   },
-   sendEmail: function(email) {
-    // Important server-side check for security and data integrity
+  sendEmail: function(email) {
     console.log("server is sending email to ", email);
-   // console.log(object)
-    //check(doc, Emails);
     console.log(email);
-
-    Email.send({
-      to: email,
-      from: Meteor.user().emails[0].address,
-      subject: "Hi, I love your project!",
-      text: "It's really awesome.  May I join you? \n\nThanks! \n\n  - from "+ Meteor.user().username,
-      });
-    
-    //this.unblock();
+    Email.send(email);
   }
 });
 

@@ -1,6 +1,5 @@
 Projects = new Mongo.Collection('projects');
 
-//ConcernedPeople = new Mongo.Collection('concernedPeople');
 Emails = new Mongo.Collection('emails');
 
 Projects.before.insert(function (userId, doc) {
@@ -15,21 +14,6 @@ Projects.after.insert(function (userId, doc) {
     delete user._id;
     Meteor.users.update({_id: userId}, {$set: user});
   })
-});
-
-Projects.helpers({
-  datePosted: function () {
-    // http://momentjs.com/
-    return moment(this.createdAt).format('l');
-  },
-  author: function () {
-    return Meteor.users.findOne({_id: this.userId});
-  },
-/*
-  voters: function () {
-    return Meteor.users.find({_id: {$in: this.voterIds}});
-  }
-*/
 });
 
 // refer to https://developer.github.com/v3/repos/
@@ -118,29 +102,41 @@ Projects.attachSchema(new SimpleSchema({
 
 }));
 
-Emails.attachSchema(  new SimpleSchema({
-    titles :{
-        type: String,
-          autoform: {
+Emails.attachSchema(new SimpleSchema({
+  titles: {
+    type: String,
+    autoform: {
       'label-type': 'placeholder',
       placeholder: '邮件主题'
     },
-        max: 50
-    },
-   /* email: {
-        type: String,
-        regEx: SimpleSchema.RegEx.Email,
-        autoform: {
+    max: 50
+  },
+  message: {
+    type: String,
+    autoform: {
       'label-type': 'placeholder',
-      placeholder: '邮箱地址'
+      placeholder: '邮件内容',
+      rows: 5
     },
-    },*/
-    message: {
-        type: String,
-        autoform: {
-      'label-type': 'placeholder',
-      placeholder: '邮件内容'
-    },
-        max: 1000
+    min: 20,
+    max: 1000
+  },
+  owner: {
+    type: String,
+    optional: false,
+    autoValue: function () {
+      if (this.isSet) {
+        return;
+      }
+      if (this.isInsert) {
+        return Meteor.userId();
+      } else {
+        this.unset();
+      }
     }
+  },
+  receiver: {
+    type: String,
+    optional: false
+  }
 }));

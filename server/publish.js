@@ -62,3 +62,7 @@ Meteor.publishComposite('user', function(_id) {
     ]
   };
 });
+
+Meteor.publish('emails', function (opts) {
+  return Emails.find();
+})

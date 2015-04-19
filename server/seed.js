@@ -3,9 +3,8 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
 
   if (Projects.find({}).count() === 0) {
     Projects.remove({});
-    // return;
+    return;
     Projects.insert({
-      _id: 1,
       name: "毛豆网移动版",
       description: "在线协作学习社区",
       url: "https://github.com/limingth/maodou/",
@@ -18,7 +17,6 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
      watchers:[],
     });
     Projects.insert({
-      _id: 2,
       name: "MeteorBB开源社区",
       description: "BBS论坛",
       url: "https://github.com/cobola/meteorbb",
@@ -26,7 +24,6 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
       owner: -1,
     });
     Projects.insert({
-      _id: 3,
       name: "滴滴拉屎Meteor版",
       description: "山寨版",
       url: "https://github.com/limingth/didipoop/",
@@ -35,7 +32,7 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
     });
     Meteor.users.insert({
       "_id" : "-1",
-      "createdAt" : ISODate("2015-04-11T10:22:30.872Z"),
+      "createdAt" : new Date(),
       "services" : {
           "password" : {
               "bcrypt" : ""
@@ -43,7 +40,7 @@ process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd
           "resume" : {
               "loginTokens" : [
                   {
-                      "when" : ISODate("2015-04-14T11:10:21.798Z"),
+                      "when" : new Date(),
                       "hashedToken" : "mFo5P4zoSFjAwWxBOSltNarp31dvef5WoqspNmnHJWg="
                   }
               ]

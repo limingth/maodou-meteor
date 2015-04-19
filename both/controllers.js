@@ -24,16 +24,6 @@ ProjectsShowController = AppController.extend({
   }
 });
 
-Projects.helpers({
-  datePosted: function () {
-    // http://momentjs.com/
-    return moment(this.createdAt).format('l');
-  },
-  author: function () {
-    return Meteor.users.findOne({_id: this.userId});
-  },
-});
-
 UsersShowController = AppController.extend({
   waitOn: function () {
     return Meteor.subscribe('user', this.params._id);

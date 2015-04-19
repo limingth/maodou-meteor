@@ -106,13 +106,35 @@ li.item-desc {
 #at-pwd-form [for="at-field-username_and_email"] {
   width: 160px;
 }
+#UserProfile .item-icon-right {
+  padding-right: 90px;
+}
+#UserProfile .plain-watch-item,
+#UserProfile .plain-owner-item,
 #UserProfile .unwatch-item,
 #UserProfile .del-item {
-  font-size: 12px;
+  font-size: 14px;
 }
+#UserProfile .plain-watch-item,
 #UserProfile .unwatch-item {
   color: green;
 }
 #UserProfile .del-item {
   color: red;
+}
+#UserProfile .plain-owner-item {
+  color: blue;
+}
+
+#ProjectDetails .project-owner {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: absolute;
+  top: 66px;
+  left: 0px;
+  max-width: 70px;
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
 }
