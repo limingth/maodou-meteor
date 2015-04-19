@@ -1,5 +1,5 @@
 Meteor.startup(function () {
-process.env.MAIL_URL = 'smtp://postmaster%40sandbox0a17612ae2b74af1996afb94666dd84c.mailgun.org:cb0bcfa32063656881ed92a656a6ab17@smtp.mailgun.org:587';
+process.env.MAIL_URL = 'smtp://postmaster@sandboxd27da3783b5d46918338e5cc40441b48.mailgun.org:bde696904c0552c8e3cf020b4afa989b@smtp.mailgun.org:587';
 
   if (Projects.find({}).count() === 0) {
     Projects.remove({});
